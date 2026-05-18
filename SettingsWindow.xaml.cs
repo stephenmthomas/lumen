@@ -14,7 +14,7 @@ namespace DisplayControl;
 
 public partial class SettingsWindow : Window
 {
-    private bool _allowNativeChromeMessages = false; //to allow dialog intercepts, modals, etc...
+    public bool _allowNativeChromeMessages = false; //to allow dialog intercepts, modals, etc...
 
     private readonly DisplayService _displayService;
     private bool _isUpdating;
@@ -44,6 +44,8 @@ public partial class SettingsWindow : Window
         _iccProfileService = iccProfileService;
         _currentProfile = new ColorProfile();
 
+        
+
         LoadMonitors();
         InitializeCurveEditors();
         LoadCurrentValues();
@@ -71,6 +73,7 @@ public partial class SettingsWindow : Window
         UpdateStatus("Ready...", StatusType.Good);
 
         CheckGammaRampStatus();
+
     }
 
     #region Initialization

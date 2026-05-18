@@ -8,7 +8,7 @@
         ResizeMode="CanResize" 
         Background="#1E1E22" 
         Foreground="#FFFFFF" 
-        Icon="/app.ico" 
+        Icon="app.ico" 
         WindowStyle="None" 
         Left="-5000">
     <!-- Loads off screen to prevent flicker. -->
@@ -121,7 +121,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Image Grid.Column="0" Source="/app.ico" Width="16" Height="16" VerticalAlignment="Center" Margin="12,0,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <Image Grid.Column="0" Source="app.ico" Width="16" Height="16" VerticalAlignment="Center" Margin="12,0,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
                     <TextBlock Text="μLumen" VerticalAlignment="Center" Margin="6,0,9,0" FontWeight="SemiBold" FontSize="11" Foreground="#B0B0B0"/>
                     <Button Content="&#xE700;" Click="PopOut_Menu" Margin="3,0,3,0" Style="{StaticResource CaptionBarButtonStyle}" Visibility="Collapsed"/>
                 </StackPanel>

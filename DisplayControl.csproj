@@ -10,17 +10,15 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <Resource Include="app.ico" />
+	  <Content Include="app.ico">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
   </ItemGroup>
   
-  <ItemGroup>
-    <Page Update="Styles\ButtonStyles.xaml">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Page>
-  </ItemGroup>
 
 	<PropertyGroup>
-		<PublishSingleFile>true</PublishSingleFile>
+
 		<SelfContained>true</SelfContained>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 	</PropertyGroup>

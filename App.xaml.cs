@@ -1,5 +1,6 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Interop;
+using System.IO;
 using DisplayControl.Services;
 
 namespace DisplayControl;
@@ -20,6 +21,27 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+
+        // Set up exception handlers first
+        AppDomain.CurrentDomain.UnhandledException += (s, ex) =>
+        {
+            // Enable message boxes before showing error
+            if (MainWindow is SettingsWindow sw)
+            {
+                sw._allowNativeChromeMessages = true;
+            }
+
+            var crashLog = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                "ulumen_crash.txt"
+            );
+            File.WriteAllText(crashLog, ex.ExceptionObject.ToString());
+            MessageBox.Show($"μLumen crashed. See ulumen_crash.txt on Desktop.",
+                            "Crash", MessageBoxButton.OK, MessageBoxImage.Error);
+        };
+
+
+
         base.OnStartup(e);
 
         
@@ -55,11 +77,13 @@ public partial class App : Application
 
         // Create native tray icon
         CreateTrayIcon(helper.Handle);
-
+        
         // position and show main form appropriately
         if (_settingsService.Settings.StartMinimized) _settingsWindow.Hide();
         _settingsWindow.Left = (System.Windows.SystemParameters.PrimaryScreenWidth / 2) - (_settingsWindow.Width / 2);
         _settingsWindow.Top = (System.Windows.SystemParameters.PrimaryScreenHeight / 2) - (_settingsWindow.Height / 2);
+
+
     }
 
     private void CreateTrayIcon(IntPtr hwnd)
