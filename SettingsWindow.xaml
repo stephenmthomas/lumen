@@ -122,7 +122,7 @@
                 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                     <Image Grid.Column="0" Source="/app.ico" Width="16" Height="16" VerticalAlignment="Center" Margin="12,0,0,0" RenderOptions.BitmapScalingMode="HighQuality"/>
-                    <TextBlock Text="μLumen Display Controller" VerticalAlignment="Center" Margin="6,0,9,0" FontWeight="SemiBold" FontSize="11" Foreground="#B0B0B0"/>
+                    <TextBlock Text="μLumen" VerticalAlignment="Center" Margin="6,0,9,0" FontWeight="SemiBold" FontSize="11" Foreground="#B0B0B0"/>
                     <Button Content="&#xE700;" Click="PopOut_Menu" Margin="3,0,3,0" Style="{StaticResource CaptionBarButtonStyle}" Visibility="Collapsed"/>
                 </StackPanel>
                 
@@ -947,14 +947,14 @@
                                                 <TextBlock Text="• Advanced Curve Editors for gamma ramp manipulation" FontSize="9" Foreground="#9A9AA4" Margin="6,3"/>
                                                 <TextBlock Text="• Per-channel RGB editing and adjustment" FontSize="9" Foreground="#9A9AA4" Margin="6,3"/>
                                                 <TextBlock Text="• Global keyboard shortcuts for quick display editing" FontSize="9" Foreground="#9A9AA4" Margin="6,3"/>
-                                                <Button Content="Check for Updates" HorizontalAlignment="Left" Margin="0,6"/>
+                                                <Button Content="Check for Updates" HorizontalAlignment="Left" Margin="0,6" Click="VisitGit_Click"/>
                                             </StackPanel>
                                         </Expander>
                                         <Expander Header="Support">
                                             <StackPanel>
-                                                <Button Content="View Documentation" HorizontalAlignment="Stretch" Margin="0,3"/>
-                                                <Button Content="Report an Issue" HorizontalAlignment="Stretch" Margin="0,3"/>
-                                                <Button Content="Visit GitHub" HorizontalAlignment="Stretch" Margin="0,3"/>
+                                                <Button Content="View Documentation" HorizontalAlignment="Stretch" Margin="0,3" Click="ViewDocs_Click"/>
+                                                <Button Content="Report an Issue" HorizontalAlignment="Stretch" Margin="0,3" Click="ReportIssue_Click"/>
+                                                <Button Content="Visit GitHub" HorizontalAlignment="Stretch" Margin="0,3" Click="VisitGit_Click"/>
                                             </StackPanel>
                                         </Expander>
                                     </StackPanel>

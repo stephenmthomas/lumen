@@ -1385,6 +1385,23 @@ public partial class SettingsWindow : Window
         }
     }
 
+    private void ViewDocs_Click(object sender, RoutedEventArgs e)
+    {
+        OpenUrl("https://github.com/stephenmthomas/lumen/blob/master/USER_GUIDE.md");
+    }
+
+    private void ReportIssue_Click(object sender, RoutedEventArgs e)
+    {
+        OpenUrl("https://github.com/stephenmthomas/lumen/issues");
+    }
+
+    private void VisitGit_Click(object sender, RoutedEventArgs e)
+    {
+        //https://github.com/stephenmthomas/lumen
+
+        OpenUrl("https://github.com/stephenmthomas/lumen");
+    }
+
     public static void OpenUrl(string url)
     {
         var psi = new System.Diagnostics.ProcessStartInfo
@@ -1607,6 +1624,8 @@ public partial class SettingsWindow : Window
             MessageBox.Show("Failed to load preset.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
+
 
 
     #endregion
