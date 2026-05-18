@@ -109,6 +109,19 @@
 
 ---
 
+## ⬇️ Download
+
+### Latest Release: v0.0.1
+
+**[Download μLumen v0.0.1 for Windows](./download/uLumen0.0.1.zip)** (x64)
+
+**Installation:**
+1. Extract the ZIP file
+2. Run `DisplayControl.exe`
+3. No installation required
+
+---
+
 ## 🛠️ Building from Source
 
 ```bash
