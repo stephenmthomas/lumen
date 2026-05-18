@@ -12,7 +12,7 @@
 
 
 <p align="center">
-  <img alt="Popup screenshot" src="./screen.png" height="450">
+  <img alt="screenshot" src="./screen.png" height="450">
 </p>
 
 ---
@@ -146,6 +146,10 @@ No NuGet packages or external dependencies are required - all display manipulati
 5. Use the built-in presets (Default, Night, Reading, Gaming) or save your own
 6. Right-click the tray icon for quick preset access and reset
 
+
+<p align="center">
+  <img alt="UI" src="./screen_ui.png" height="450">
+</p>
 
 
 <h3 align="center">Global Hotkeys</h3>
