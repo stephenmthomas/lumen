@@ -1,0 +1,137 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         PROGRESSBAR STYLES — Themed
+         Drop-in replacement for default WPF ProgressBar.
+         
+         NOTE: LinearGradientBrush stops inside ControlTemplates
+         cannot use DynamicResource for individual Color properties.
+         These gradients are rebuilt from theme colors via the
+         brush keys instead.
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <Style TargetType="{x:Type ProgressBar}">
+        <Setter Property="Foreground"       Value="{DynamicResource Theme.Brush.Accent.Base}"/>
+        <Setter Property="Background"       Value="{DynamicResource Theme.Brush.Surface.Base}"/>
+        <Setter Property="BorderBrush"      Value="{DynamicResource Theme.Brush.Border.Default}"/>
+        <Setter Property="BorderThickness"  Value="0"/>
+        <Setter Property="Height"           Value="6"/>
+        <Setter Property="MinHeight"        Value="4"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid SnapsToDevicePixels="True">
+                        <Border x:Name="PART_Track"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{DynamicResource Theme.Radius.Small}"/>
+
+                        <Border x:Name="PART_Indicator"
+                                HorizontalAlignment="Left"
+                                CornerRadius="{DynamicResource Theme.Radius.Small}"
+                                SnapsToDevicePixels="True">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="{DynamicResource Theme.Accent.Base}" Offset="0"/>
+                                    <GradientStop Color="{DynamicResource Theme.Accent.Hover}" Offset="0.6"/>
+                                    <GradientStop Color="{DynamicResource Theme.Accent.Light}" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <Border x:Name="IndeterminateOverlay"
+                                CornerRadius="{DynamicResource Theme.Radius.Small}"
+                                Visibility="Collapsed"
+                                ClipToBounds="True">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0"
+                                                     SpreadMethod="Repeat"
+                                                     MappingMode="Absolute">
+                                    <GradientStop Color="#002A7AE2" Offset="0"/>
+                                    <GradientStop Color="{DynamicResource Theme.Accent.Base}" Offset="0.4"/>
+                                    <GradientStop Color="{DynamicResource Theme.Accent.Hover}" Offset="0.6"/>
+                                    <GradientStop Color="#002A7AE2" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+
+                            <Border.RenderTransform>
+                                <TranslateTransform x:Name="IndeterminateTransform" X="-200"/>
+                            </Border.RenderTransform>
+                        </Border>
+
+                        <Border x:Name="GlowOverlay"
+                                HorizontalAlignment="Left"
+                                CornerRadius="{DynamicResource Theme.Radius.Small}"
+                                Opacity="0.25"
+                                IsHitTestVisible="False">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="{DynamicResource Theme.White}" Offset="0"/>
+                                    <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsIndeterminate" Value="True">
+                            <Setter TargetName="PART_Indicator" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="GlowOverlay" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="IndeterminateOverlay" Property="Visibility" Value="Visible"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="IndeterminateTransform"
+                                            Storyboard.TargetProperty="X"
+                                            From="-200" To="600"
+                                            Duration="0:0:2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_Indicator" Property="Background"
+                                    Value="{DynamicResource Theme.Brush.Text.Muted}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ── Thick variant ────────────────────────────────────────── -->
+    <Style x:Key="ThickProgressBarStyle" TargetType="{x:Type ProgressBar}"
+           BasedOn="{StaticResource {x:Type ProgressBar}}">
+        <Setter Property="Height" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ProgressBar}">
+                    <Grid SnapsToDevicePixels="True">
+                        <Border x:Name="PART_Track"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{DynamicResource Theme.Radius.Large}"/>
+
+                        <Border x:Name="PART_Indicator"
+                                HorizontalAlignment="Left"
+                                CornerRadius="{DynamicResource Theme.Radius.Large}">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="{DynamicResource Theme.Accent.Base}" Offset="0"/>
+                                    <GradientStop Color="{DynamicResource Theme.Accent.Light}" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

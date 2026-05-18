@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11620.152 stable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisplayControl", "DisplayControl.csproj", "{7BC20E1E-839D-E14D-AB15-C9D63784A7F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BC20E1E-839D-E14D-AB15-C9D63784A7F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BC20E1E-839D-E14D-AB15-C9D63784A7F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BC20E1E-839D-E14D-AB15-C9D63784A7F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BC20E1E-839D-E14D-AB15-C9D63784A7F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22A2F5DC-AA08-404F-A817-D7E034263C73}
+	EndGlobalSection
+EndGlobal

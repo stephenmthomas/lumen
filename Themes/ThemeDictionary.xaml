@@ -1,0 +1,133 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         THEME TEMPLATE
+         Central palette for the entire control suite.
+         
+         Every colour, radius, thickness, and font token used by
+         style files is declared here.  To create a new theme, copy
+         this file (e.g. ThemeDark.xaml) and change the values.
+         
+         Style files reference these with DynamicResource so the
+         theme can be hot-swapped at runtime.
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <!-- ── SURFACE HIERARCHY (backgrounds, dark → light) ─────────── -->
+    <Color x:Key="Theme.Surface.Darkest">       #1A1A1E</Color>
+    <Color x:Key="Theme.Surface.Dark">          #1E1E22</Color>
+    <Color x:Key="Theme.Surface.Mid">           #222226</Color>
+    <Color x:Key="Theme.Surface.Base">          #2B2B30</Color>
+    <Color x:Key="Theme.Surface.Raised">        #35353B</Color>
+    <Color x:Key="Theme.Surface.Hover">         #38383E</Color>
+    <Color x:Key="Theme.Surface.Popup">         #252528</Color>
+
+    <!-- ── BORDERS ───────────────────────────────────────────────── -->
+    <Color x:Key="Theme.Border.Subtle">         #2A2A2E</Color>
+    <Color x:Key="Theme.Border.Default">        #3E3E44</Color>
+    <Color x:Key="Theme.Border.Hover">          #5A5A64</Color>
+    <Color x:Key="Theme.Border.Separator">      #2E2E34</Color>
+
+    <!-- ── TEXT ───────────────────────────────────────────────────── -->
+    <Color x:Key="Theme.Text.Primary">          #E4E4E8</Color>
+    <Color x:Key="Theme.Text.Secondary">        #C8C8D0</Color>
+    <Color x:Key="Theme.Text.Tertiary">         #9A9AA4</Color>
+    <Color x:Key="Theme.Text.Muted">            #5A5A64</Color>
+    <Color x:Key="Theme.Text.Placeholder">      #6A6A74</Color>
+    <Color x:Key="Theme.Text.PlaceholderAlt">   #8A8A94</Color>
+
+    <!-- ── ACCENT (primary blue) ─────────────────────────────────── -->
+    <Color x:Key="Theme.Accent.Base">           #2A7AE2</Color>
+    <Color x:Key="Theme.Accent.Hover">          #3B8BF2</Color>
+    <Color x:Key="Theme.Accent.Pressed">        #1E66C4</Color>
+    <Color x:Key="Theme.Accent.Light">          #4D9BFF</Color>
+    <Color x:Key="Theme.Accent.Subtle10">       #EF2A7AE2</Color>    <!-- ~10% opacity -->
+    <Color x:Key="Theme.Accent.Subtle20">       #DF2A7AE2</Color>    <!-- ~20% opacity -->
+    <Color x:Key="Theme.Accent.Subtle25">       #CF2A7AE2</Color>    <!-- ~25% opacity -->
+
+
+    <!-- ── FIXED (black, white, translucent overlays) ────────────── -->
+    <Color x:Key="Theme.White">                 #FFFFFF</Color>
+    <Color x:Key="Theme.Black">                 #000000</Color>
+    <Color x:Key="Theme.HoverOverlay">          #24242A</Color>
+    <!-- checkbox/radio hover bg -->
+    <Color x:Key="Theme.FocusGlow50">           #50FFFFFF</Color>
+    <Color x:Key="Theme.FocusGlow30">           #30FFFFFF</Color>
+    <Color x:Key="Theme.ThumbGlow">             #18FFFFFF</Color>
+
+    <!-- status colors (for future use / progress bar) -->
+    <Color x:Key="Theme.Status.Success">        #FF51CF66</Color>
+    <Color x:Key="Theme.Status.Error">          #FFFF6B6B</Color>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         BRUSHES — derived from the Colors above
+         ═══════════════════════════════════════════════════════════════ -->
+
+    <!-- Surface -->
+    <SolidColorBrush x:Key="Theme.Brush.Surface.Darkest"        Color="{StaticResource Theme.Surface.Darkest}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Surface.Dark"           Color="{StaticResource Theme.Surface.Dark}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Surface.Mid"            Color="{StaticResource Theme.Surface.Mid}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Surface.Base"           Color="{StaticResource Theme.Surface.Base}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Surface.Raised"         Color="{StaticResource Theme.Surface.Raised}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Surface.Hover"          Color="{StaticResource Theme.Surface.Hover}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Surface.Popup"          Color="{StaticResource Theme.Surface.Popup}"/>
+
+    <!-- Borders -->
+    <SolidColorBrush x:Key="Theme.Brush.Border.Subtle"          Color="{StaticResource Theme.Border.Subtle}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Border.Default"         Color="{StaticResource Theme.Border.Default}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Border.Hover"           Color="{StaticResource Theme.Border.Hover}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Border.Separator"       Color="{StaticResource Theme.Border.Separator}"/>
+
+    <!-- Text -->
+    <SolidColorBrush x:Key="Theme.Brush.Text.Primary"           Color="{StaticResource Theme.Text.Primary}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Text.Secondary"         Color="{StaticResource Theme.Text.Secondary}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Text.Tertiary"          Color="{StaticResource Theme.Text.Tertiary}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Text.Muted"             Color="{StaticResource Theme.Text.Muted}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Text.Placeholder"       Color="{StaticResource Theme.Text.Placeholder}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Text.PlaceholderAlt"    Color="{StaticResource Theme.Text.PlaceholderAlt}"/>
+
+    <!-- Accent -->
+    <SolidColorBrush x:Key="Theme.Brush.Accent.Base"            Color="{StaticResource Theme.Accent.Base}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Accent.Hover"           Color="{StaticResource Theme.Accent.Hover}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Accent.Pressed"         Color="{StaticResource Theme.Accent.Pressed}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Accent.Light"           Color="{StaticResource Theme.Accent.Light}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Accent.Subtle10"        Color="{StaticResource Theme.Accent.Subtle10}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Accent.Subtle20"        Color="{StaticResource Theme.Accent.Subtle20}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Accent.Subtle25"        Color="{StaticResource Theme.Accent.Subtle25}"/>
+
+    <!-- Fixed -->
+    <SolidColorBrush x:Key="Theme.Brush.White"                  Color="{StaticResource Theme.White}"/>
+    <SolidColorBrush x:Key="Theme.Brush.Black"                  Color="{StaticResource Theme.Black}"/>
+    <SolidColorBrush x:Key="Theme.Brush.HoverOverlay"           Color="{StaticResource Theme.HoverOverlay}"/>
+    <SolidColorBrush x:Key="Theme.Brush.FocusGlow50"            Color="{StaticResource Theme.FocusGlow50}"/>
+    <SolidColorBrush x:Key="Theme.Brush.FocusGlow30"            Color="{StaticResource Theme.FocusGlow30}"/>
+    <SolidColorBrush x:Key="Theme.Brush.ThumbGlow"              Color="{StaticResource Theme.ThumbGlow}"/>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SHAPE TOKENS
+         ═══════════════════════════════════════════════════════════════ -->
+    <CornerRadius x:Key="Theme.Radius.None">0</CornerRadius>
+    <CornerRadius x:Key="Theme.Radius.XSmall">1</CornerRadius>
+    <CornerRadius x:Key="Theme.Radius.Small">3</CornerRadius>
+    <CornerRadius x:Key="Theme.Radius.Medium">4</CornerRadius>
+    <CornerRadius x:Key="Theme.Radius.Large">6</CornerRadius>
+    <CornerRadius x:Key="Theme.Radius.XLarge">8</CornerRadius>
+    <CornerRadius x:Key="Theme.Radius.Round">9</CornerRadius>
+
+    <Thickness x:Key="Theme.BorderThickness.Default">1</Thickness>
+    <Thickness x:Key="Theme.BorderThickness.Heavy">1.5</Thickness>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         TYPOGRAPHY TOKENS
+         ═══════════════════════════════════════════════════════════════ -->
+    <FontFamily x:Key="Theme.Font.Family">Segoe UI</FontFamily>
+    <sys:Double x:Key="Theme.Font.Size.XSmall">9</sys:Double>
+    <sys:Double x:Key="Theme.Font.Size.Small">11</sys:Double>
+    <sys:Double x:Key="Theme.Font.Size.Caption">12</sys:Double>
+    <sys:Double x:Key="Theme.Font.Size.Body">13</sys:Double>
+    <sys:Double x:Key="Theme.Font.Size.Subtitle">15</sys:Double>
+    <sys:Double x:Key="Theme.Font.Size.Title">18</sys:Double>
+
+</ResourceDictionary>
