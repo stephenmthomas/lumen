@@ -113,7 +113,10 @@
 
 ### Latest Release: v0.0.1
 
-**[Download μLumen v0.0.1 for Windows](./download/uLumen0.0.1.zip)** (x64)
+**[μLumen v0.0.1 for Windows](./download/uLumen0.0.1.zip)** (x64)
+
+**[DIRECT DOWNLOAD v0.0.1 - x64](https://github.com/stephenmthomas/lumen/blob/master/download/uLumen0.0.1.zip)**
+
 
 **Installation:**
 1. Extract the ZIP file
