@@ -1,7 +1,7 @@
-<Window x:Class="DisplayControl.SettingsWindow" 
+<Window x:Class="μLumen.SettingsWindow" 
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-        xmlns:controls="clr-namespace:DisplayControl.Controls" 
+        xmlns:controls="clr-namespace:μLumen.Controls" 
         Title="μLumen" 
         Height="700" 
         Width="900" 
@@ -189,27 +189,21 @@
                 <Grid x:Name="MainStage" Grid.ColumnSpan="2" Margin="0,33,0,0" Grid.RowSpan="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*" x:Name="InfoColumn"/>
                     </Grid.ColumnDefinitions>
 
-                    <TabControl x:Name="MainTabs" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,3,0,3" Grid.RowSpan="3" Style="{StaticResource TabPageControlStyle}" SelectedIndex="0">
+                    <TabControl x:Name="MainTabs" Grid.Column="0" Margin="0,3,0,3" Grid.RowSpan="3" Style="{StaticResource TabPageControlStyle}" SelectedIndex="0">
 
                         <TabItem Header="Basic">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                 <Grid Margin="9">
+                                    
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="9"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <GroupBox Header="Exposure">
+
+                                    <StackPanel Grid.Row="0">
+                                        <GroupBox Header="Exposure">
                                                 <StackPanel VerticalAlignment="Center">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
@@ -243,63 +237,61 @@
                                                     </Grid>
                                                 </StackPanel>
                                             </GroupBox>
-                                            <GroupBox Header="Shadows / Highlights">
-                                                <StackPanel VerticalAlignment="Center">
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Blacks" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="BlacksSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="BlacksSlider_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=BlacksSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Shadows" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="ShadowsSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="ShadowsSlider_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=ShadowsSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Midtones" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="MidtonesSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="MidtonesSlider_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=MidtonesSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Highlights" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="HighlightsSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="HighlightsSlider_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=HighlightsSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Whites" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="WhitesSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="WhitesSlider_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=WhitesSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </GroupBox>
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="2">
-                                            <GroupBox Header="Tone">
+                                        <GroupBox Header="Shadows / Highlights">
+                                            <StackPanel VerticalAlignment="Center">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Blacks" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="BlacksSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="BlacksSlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=BlacksSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Shadows" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="ShadowsSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="ShadowsSlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=ShadowsSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Midtones" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="MidtonesSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="MidtonesSlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=MidtonesSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Highlights" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="HighlightsSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="HighlightsSlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=HighlightsSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Whites" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="WhitesSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="WhitesSlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=WhitesSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </GroupBox>
+                                        <GroupBox Header="Tone">
                                                 <StackPanel VerticalAlignment="Center">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
@@ -323,65 +315,65 @@
                                                     </Grid>
                                                 </StackPanel>
                                             </GroupBox>
-                                            <GroupBox>
-                                                <GroupBox.Header>
-                                                    <CheckBox x:Name="LevelsEnabledCheckbox" Content="Levels" Checked="LevelsEnabled_Changed" Unchecked="LevelsEnabled_Changed" IsChecked="False"/>
-                                                </GroupBox.Header>
-                                                <StackPanel x:Name="LevelsPanel" IsEnabled="False" Opacity="0.75">
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Input Black" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="InputBlackSlider" Grid.Column="1" Minimum="0" Maximum="255" Value="0" ValueChanged="Levels_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=InputBlackSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Input White" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="InputWhiteSlider" Grid.Column="1" Minimum="0" Maximum="255" Value="255" ValueChanged="Levels_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=InputWhiteSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Output Black" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="OutputBlackSlider" Grid.Column="1" Minimum="0" Maximum="255" Value="0" ValueChanged="Levels_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=OutputBlackSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Output White" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="OutputWhiteSlider" Grid.Column="1" Minimum="0" Maximum="255" Value="255" ValueChanged="Levels_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=OutputWhiteSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <controls:RangeSlider Minimum="0" Maximum="255" RangeMin="{Binding ShadowLevel}" RangeMax="{Binding HighlightLevel}" Step="1" Visibility="Collapsed"/>
-                                                </StackPanel>
-                                            </GroupBox>
-                                        </StackPanel>
-                                    </Grid>
-                                    <Expander Grid.Row="1" Header="Master Curve (Luminance)" IsExpanded="False" Margin="0,9,0,0">
-                                        <DockPanel>
-                                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,42">
-                                                <CheckBox x:Name="MasterCurveEnabled" Content="Enable" Checked="MasterCurveEnabled_Changed" Unchecked="MasterCurveEnabled_Changed" IsChecked="False" Margin="0,0,12,0"/>
-                                                <Button Content="Reset" Style="{StaticResource SmallButton}" Click="ResetMasterCurve_Click"/>
+                                        <GroupBox>
+                                            <GroupBox.Header>
+                                                <CheckBox x:Name="LevelsEnabledCheckbox" Content="Levels" Checked="LevelsEnabled_Changed" Unchecked="LevelsEnabled_Changed" IsChecked="False"/>
+                                            </GroupBox.Header>
+                                            <StackPanel x:Name="LevelsPanel" IsEnabled="False" Opacity="0.75">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Input Black" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="InputBlackSlider" Grid.Column="1" Minimum="0" Maximum="255" Value="0" ValueChanged="Levels_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=InputBlackSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Input White" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="InputWhiteSlider" Grid.Column="1" Minimum="0" Maximum="255" Value="255" ValueChanged="Levels_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=InputWhiteSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Output Black" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="OutputBlackSlider" Grid.Column="1" Minimum="0" Maximum="255" Value="0" ValueChanged="Levels_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=OutputBlackSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Output White" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="OutputWhiteSlider" Grid.Column="1" Minimum="0" Maximum="255" Value="255" ValueChanged="Levels_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=OutputWhiteSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <controls:RangeSlider Minimum="0" Maximum="255" RangeMin="{Binding ShadowLevel}" RangeMax="{Binding HighlightLevel}" Step="1" Visibility="Collapsed"/>
                                             </StackPanel>
-                                            <controls:CurveEditorControl x:Name="MasterCurveEditor" CurveColor="White" CurveChanged="MasterCurve_Changed" Height="280" Margin="3,0,3,0"/>
-                                        </DockPanel>
-                                    </Expander>
+                                        </GroupBox>
+                                        <Expander Grid.Row="0" Header="Master Curve (Luminance)" IsExpanded="False" Margin="0,9,0,0">
+                                            <DockPanel>
+                                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,42">
+                                                    <CheckBox x:Name="MasterCurveEnabled" Content="Enable" Checked="MasterCurveEnabled_Changed" Unchecked="MasterCurveEnabled_Changed" IsChecked="False" Margin="0,0,12,0"/>
+                                                    <Button Content="Reset" Style="{StaticResource SmallButton}" Click="ResetMasterCurve_Click"/>
+                                                </StackPanel>
+                                                <controls:CurveEditorControl x:Name="MasterCurveEditor" CurveColor="White" CurveChanged="MasterCurve_Changed" Height="280" Margin="3,0,3,0"/>
+                                            </DockPanel>
+                                        </Expander>
+                                    </StackPanel>
+
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
@@ -389,18 +381,13 @@
                         <TabItem Header="Color">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                 <Grid Margin="9">
+                                    
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="9"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Grid.Column="0">
-                                            <GroupBox Header="White Balance">
+
+                                    <StackPanel Grid.Column="0">
+                                        <GroupBox Header="White Balance">
                                                 <StackPanel>
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
@@ -424,87 +411,85 @@
                                                     </Grid>
                                                 </StackPanel>
                                             </GroupBox>
-                                            <GroupBox Header="Saturation">
-                                                <StackPanel>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Vibrance" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="VibranceSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="VibranceSlider_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=VibranceSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Saturation" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="SaturationSlider" Grid.Column="1" Minimum="0" Maximum="300" Value="100" ValueChanged="SaturationSlider_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=SaturationSlider, Path=Value, StringFormat='{}{0:F0}%'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </GroupBox>
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="2">
-                                            <GroupBox Header="RGB Channels">
-                                                <StackPanel>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Red" Foreground="#FF6B6B" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="RedGainSlider" Style="{StaticResource RedSliderStyle}" Grid.Column="1" Minimum="0" Maximum="200" Value="100" ValueChanged="RedGainSlider_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=RedGainSlider, Path=Value, StringFormat='{}{0:F0}%'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Green" Foreground="#51CF66" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="GreenGainSlider" Style="{StaticResource GreenSliderStyle}" Grid.Column="1" Minimum="0" Maximum="200" Value="100" ValueChanged="GreenGainSlider_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=GreenGainSlider, Path=Value, StringFormat='{}{0:F0}%'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="65"/>
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="42"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Blue" Foreground="#339AF0" VerticalAlignment="Center" FontSize="10"/>
-                                                        <Slider x:Name="BlueGainSlider" Style="{StaticResource BlueSliderStyle}" Grid.Column="1" Minimum="0" Maximum="200" Value="100" ValueChanged="BlueGainSlider_ValueChanged"/>
-                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=BlueGainSlider, Path=Value, StringFormat='{}{0:F0}%'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
-                                                    </Grid>
-                                                </StackPanel>
-                                            </GroupBox>
-                                        </StackPanel>
-                                    </Grid>
-                                    <Expander Grid.Row="1" Header="RGB Channel Curves" IsExpanded="False" Margin="0,9,0,0">
-                                        <DockPanel>
-                                            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,6">
-                                                <CheckBox x:Name="ChannelCurvesEnabled" Content="Enable" Checked="ChannelCurvesEnabled_Changed" Unchecked="ChannelCurvesEnabled_Changed" IsChecked="False" Margin="0,0,12,0"/>
-                                                <Button Content="Reset All" Style="{StaticResource SmallButton}" Click="ResetChannelCurves_Click"/>
+                                        <GroupBox Header="Saturation">
+                                            <StackPanel>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Vibrance" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="VibranceSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="VibranceSlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=VibranceSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Saturation" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="SaturationSlider" Grid.Column="1" Minimum="0" Maximum="300" Value="100" ValueChanged="SaturationSlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=SaturationSlider, Path=Value, StringFormat='{}{0:F0}%'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
                                             </StackPanel>
-                                            <TabControl x:Name="ChannelCurveTabs" Background="Transparent" BorderThickness="0">
-                                                <TabItem Header="Red" Foreground="#FF6B6B">
-                                                    <controls:CurveEditorControl x:Name="RedCurveEditor" CurveColor="#FFFF6B6B" CurveChanged="ChannelCurve_Changed" Height="280" Margin="3,0,3,0"/>
-                                                </TabItem>
-                                                <TabItem Header="Green" Foreground="#51CF66">
-                                                    <controls:CurveEditorControl x:Name="GreenCurveEditor" CurveColor="#FF51CF66" CurveChanged="ChannelCurve_Changed" Height="280" Margin="3,0,3,0"/>
-                                                </TabItem>
-                                                <TabItem Header="Blue" Foreground="#339AF0">
-                                                    <controls:CurveEditorControl x:Name="BlueCurveEditor" CurveColor="#FF339AF0" CurveChanged="ChannelCurve_Changed" Height="280" Margin="3,0,3,0"/>
-                                                </TabItem>
-                                            </TabControl>
-                                        </DockPanel>
-                                    </Expander>
+                                        </GroupBox>
+                                        <GroupBox Header="RGB Channels">
+                                            <StackPanel>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Red" Foreground="#FF6B6B" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="RedGainSlider" Style="{StaticResource RedSliderStyle}" Grid.Column="1" Minimum="0" Maximum="200" Value="100" ValueChanged="RedGainSlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=RedGainSlider, Path=Value, StringFormat='{}{0:F0}%'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Green" Foreground="#51CF66" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="GreenGainSlider" Style="{StaticResource GreenSliderStyle}" Grid.Column="1" Minimum="0" Maximum="200" Value="100" ValueChanged="GreenGainSlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=GreenGainSlider, Path=Value, StringFormat='{}{0:F0}%'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="65"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Blue" Foreground="#339AF0" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="BlueGainSlider" Style="{StaticResource BlueSliderStyle}" Grid.Column="1" Minimum="0" Maximum="200" Value="100" ValueChanged="BlueGainSlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=BlueGainSlider, Path=Value, StringFormat='{}{0:F0}%'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </GroupBox>
+                                        <Expander Grid.Row="1" Header="RGB Channel Curves" IsExpanded="False" Margin="0,9,0,0">
+                                            <DockPanel>
+                                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,6">
+                                                    <CheckBox x:Name="ChannelCurvesEnabled" Content="Enable" Checked="ChannelCurvesEnabled_Changed" Unchecked="ChannelCurvesEnabled_Changed" IsChecked="False" Margin="0,0,12,0"/>
+                                                    <Button Content="Reset All" Style="{StaticResource SmallButton}" Click="ResetChannelCurves_Click"/>
+                                                </StackPanel>
+                                                <TabControl x:Name="ChannelCurveTabs" Background="Transparent" BorderThickness="0">
+                                                    <TabItem Header="Red" Foreground="#FF6B6B">
+                                                        <controls:CurveEditorControl x:Name="RedCurveEditor" CurveColor="#FFFF6B6B" CurveChanged="ChannelCurve_Changed" Height="280" Margin="3,0,3,0"/>
+                                                    </TabItem>
+                                                    <TabItem Header="Green" Foreground="#51CF66">
+                                                        <controls:CurveEditorControl x:Name="GreenCurveEditor" CurveColor="#FF51CF66" CurveChanged="ChannelCurve_Changed" Height="280" Margin="3,0,3,0"/>
+                                                    </TabItem>
+                                                    <TabItem Header="Blue" Foreground="#339AF0">
+                                                        <controls:CurveEditorControl x:Name="BlueCurveEditor" CurveColor="#FF339AF0" CurveChanged="ChannelCurve_Changed" Height="280" Margin="3,0,3,0"/>
+                                                    </TabItem>
+                                                </TabControl>
+                                            </DockPanel>
+                                        </Expander>
+                                    </StackPanel>
+                                    
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>
@@ -512,10 +497,13 @@
                         <TabItem Header="Enhancers">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                 <Grid Margin="9">
+                                    
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
+                                    
                                     <StackPanel Grid.Column="0">
+                                        
                                         <GroupBox Header="Dynamic Enhancers">
                                             <StackPanel>
                                                 <Grid>
@@ -695,7 +683,7 @@
                                                             <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="42"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="Black Point" VerticalAlignment="Center" FontSize="10"/>
+                                                        <TextBlock Text="Black Input" VerticalAlignment="Center" FontSize="10"/>
                                                         <Slider x:Name="FilterBlackPointSlider" Grid.Column="1" Minimum="0" Maximum="30" Value="0" ValueChanged="FilterBlackPointSlider_ValueChanged"/>
                                                         <TextBlock Grid.Column="2" Text="{Binding ElementName=FilterBlackPointSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
                                                     </Grid>
@@ -706,9 +694,70 @@
                                                             <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="42"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Text="White Point" VerticalAlignment="Center" FontSize="10"/>
+                                                        <TextBlock Text="White Input" VerticalAlignment="Center" FontSize="10"/>
                                                         <Slider x:Name="FilterWhitePointSlider" Grid.Column="1" Minimum="70" Maximum="100" Value="100" ValueChanged="FilterWhitePointSlider_ValueChanged"/>
                                                         <TextBlock Grid.Column="2" Text="{Binding ElementName=FilterWhitePointSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                    </Grid>
+
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="65"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="42"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Black Output" VerticalAlignment="Center" FontSize="10"/>
+                                                        <Slider x:Name="FilterOutputBlackSlider" Grid.Column="1" Minimum="0" Maximum="50" Value="0" ValueChanged="FilterOutputBlackSlider_ValueChanged"/>
+                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=FilterOutputBlackSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                    </Grid>
+
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="65"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="42"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="White Output" VerticalAlignment="Center" FontSize="10"/>
+                                                        <Slider x:Name="FilterOutputWhiteSlider" Grid.Column="1" Minimum="50" Maximum="100" Value="100" ValueChanged="FilterOutputWhiteSlider_ValueChanged"/>
+                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=FilterOutputWhiteSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                    </Grid>
+                                                    
+                                                    
+                                                </StackPanel>
+                                            </Expander>
+
+                                            <Expander Header="Tonal">
+                                                <StackPanel>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="65"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="42"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Gamma" VerticalAlignment="Center" FontSize="10"/>
+                                                        <Slider x:Name="FilterGammaSlider" Grid.Column="1" Minimum="50" Maximum="200" Value="100" ValueChanged="FilterGammaSlider_ValueChanged"/>
+                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=FilterGammaSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                    </Grid>
+
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="65"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="42"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Shadows" VerticalAlignment="Center" FontSize="10"/>
+                                                        <Slider x:Name="FilterShadowsSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="FilterShadowsSlider_ValueChanged"/>
+                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=FilterShadowsSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                    </Grid>
+
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="65"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="42"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="Highlights" VerticalAlignment="Center" FontSize="10"/>
+                                                        <Slider x:Name="FilterHighlightsSlider" Grid.Column="1" Minimum="-100" Maximum="100" Value="0" ValueChanged="FilterHighlightsSlider_ValueChanged"/>
+                                                        <TextBlock Grid.Column="2" Text="{Binding ElementName=FilterHighlightsSlider, Path=Value, StringFormat='{}{0:F0}'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
                                                     </Grid>
                                                 </StackPanel>
                                             </Expander>
@@ -795,7 +844,7 @@
                                             <TextBlock Text="Presets" FontWeight="SemiBold" Margin="0,0,0,6"/>
                                             <TextBlock Text="Presets can be mixed with the above settings." FontSize="9" Foreground="#9A9AA4" Margin="0,0,0,9"/>
                                             
-                                            <Expander Header="Preset">
+                                            <Expander Header="Preset" IsExpanded="True">
                                                 <StackPanel>
                                                     <ComboBox x:Name="FilterPresetComboBox" SelectionChanged="FilterPresetComboBox_SelectionChanged" Margin="0,0,0,9">
                                                         <ComboBoxItem Content="None" Tag="None" IsSelected="True"/>
@@ -807,6 +856,12 @@
                                                         <ComboBoxItem Content="Protanopia (Red)" Tag="ProtanopiaCorrection"/>
                                                         <ComboBoxItem Content="Deuteranopia (Green)" Tag="DeuteranopiaCorrection"/>
                                                         <ComboBoxItem Content="Tritanopia (Blue)" Tag="TritanopiaCorrection"/>
+                                                        <ComboBoxItem Content="Warm Film" Tag="WarmFilm"/>
+                                                        <ComboBoxItem Content="Cool Film" Tag="CoolFilm"/>
+                                                        <ComboBoxItem Content="Cyberpunk" Tag="Cyberpunk"/>
+                                                        <ComboBoxItem Content="Noir" Tag="Noir"/>
+                                                        <ComboBoxItem Content="Vintage" Tag="Vintage"/>
+                                                        <ComboBoxItem Content="HDR Effect" Tag="HDREffect"/>
                                                     </ComboBox>
                                                     <TextBlock Text="Strength" Margin="0,0,0,3"/>
                                                     <Grid>
@@ -965,7 +1020,7 @@
 
                     </TabControl>
 
-                    <Border x:Name="InfoPanel" Grid.Column="2" BorderBrush="{DynamicResource Theme.Brush.Border.Subtle}" BorderThickness="1,0,0,0" Padding="9">
+                    <Border x:Name="InfoPanel" Grid.Column="1" BorderBrush="{DynamicResource Theme.Brush.Border.Subtle}" BorderThickness="1,0,0,0" Padding="9">
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                             <StackPanel>
                                 

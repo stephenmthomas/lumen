@@ -1,9 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Interop;
 using System.IO;
-using DisplayControl.Services;
+using μLumen.Services;
 
-namespace DisplayControl;
+namespace μLumen;
 
 public partial class App : Application
 {
@@ -17,10 +17,28 @@ public partial class App : Application
     private ICCProfileService? _iccProfileService;
 
 
+    private static Mutex? _instanceMutex;
 
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        const string mutexName = "Global\\μLumen_SingleInstance";
+
+        _instanceMutex = new Mutex(true, mutexName, out bool createdNew);
+
+        if (!createdNew)
+        {
+            // Another instance is already running
+            MessageBox.Show(
+                "Display Control is already running.",
+                "Already Running",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information
+            );
+            Shutdown();
+            return;
+        }
+
 
         // Set up exception handlers first
         AppDomain.CurrentDomain.UnhandledException += (s, ex) =>
@@ -40,20 +58,14 @@ public partial class App : Application
                             "Crash", MessageBoxButton.OK, MessageBoxImage.Error);
         };
 
-
-
         base.OnStartup(e);
 
-        
        
         // Initialize services
         _displayService = new DisplayService();
         _filterService = new FilterService();
         _settingsService = new SettingsService();
         _iccProfileService = new ICCProfileService();
-
-
-        
 
         _settingsService.Load();
 

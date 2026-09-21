@@ -1,11 +1,11 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="clr-namespace:DisplayControl.Controls">
+    xmlns:controls="clr-namespace:μLumen.Controls">
 
     <!-- ═══════════════════════════════════════════════════════════════
          RANGE SLIDER STYLES — Dark Theme Suite
-         Template for DisplayControl.Controls.RangeSlider.
+         Template for μLumen.Controls.RangeSlider.
          
          Two-thumb range selector for min/max values.
          Blue filled region between thumbs, grey track outside.

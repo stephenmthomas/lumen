@@ -1,13 +1,13 @@
 ﻿using System.IO;
 using System.Text.Json;
 
-namespace DisplayControl.Services;
+namespace μLumen.Services;
 
 public class SettingsService
 {
     private static readonly string SettingsPath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "DisplayControl",
+        "μLumen",
         "settings.json"
     );
 

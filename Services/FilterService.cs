@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 
-namespace DisplayControl.Services;
+namespace μLumen.Services;
 
 /// <summary>
 /// Applies fullscreen color transformation filters using the Windows Magnification API.
@@ -161,31 +161,11 @@ public struct ColorMatrix
     /// </summary>
     public static ColorMatrix Identity => new()
     {
-        M00 = 1,
-        M01 = 0,
-        M02 = 0,
-        M03 = 0,
-        M04 = 0,
-        M10 = 0,
-        M11 = 1,
-        M12 = 0,
-        M13 = 0,
-        M14 = 0,
-        M20 = 0,
-        M21 = 0,
-        M22 = 1,
-        M23 = 0,
-        M24 = 0,
-        M30 = 0,
-        M31 = 0,
-        M32 = 0,
-        M33 = 1,
-        M34 = 0,
-        M40 = 0,
-        M41 = 0,
-        M42 = 0,
-        M43 = 0,
-        M44 = 1,
+        M00 = 1, M01 = 0, M02 = 0, M03 = 0, M04 = 0,
+        M10 = 0, M11 = 1, M12 = 0, M13 = 0, M14 = 0,
+        M20 = 0, M21 = 0, M22 = 1, M23 = 0, M24 = 0,
+        M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0,
+        M40 = 0, M41 = 0, M42 = 0, M43 = 0, M44 = 1,
     };
 
     /// <summary>
@@ -195,62 +175,23 @@ public struct ColorMatrix
     {
         get => (row, col) switch
         {
-            (0, 0) => M00,
-            (0, 1) => M01,
-            (0, 2) => M02,
-            (0, 3) => M03,
-            (0, 4) => M04,
-            (1, 0) => M10,
-            (1, 1) => M11,
-            (1, 2) => M12,
-            (1, 3) => M13,
-            (1, 4) => M14,
-            (2, 0) => M20,
-            (2, 1) => M21,
-            (2, 2) => M22,
-            (2, 3) => M23,
-            (2, 4) => M24,
-            (3, 0) => M30,
-            (3, 1) => M31,
-            (3, 2) => M32,
-            (3, 3) => M33,
-            (3, 4) => M34,
-            (4, 0) => M40,
-            (4, 1) => M41,
-            (4, 2) => M42,
-            (4, 3) => M43,
-            (4, 4) => M44,
+            (0, 0) => M00, (0, 1) => M01, (0, 2) => M02, (0, 3) => M03, (0, 4) => M04,
+            (1, 0) => M10, (1, 1) => M11, (1, 2) => M12, (1, 3) => M13, (1, 4) => M14,
+            (2, 0) => M20, (2, 1) => M21, (2, 2) => M22, (2, 3) => M23, (2, 4) => M24,
+            (3, 0) => M30, (3, 1) => M31, (3, 2) => M32, (3, 3) => M33, (3, 4) => M34,
+            (4, 0) => M40, (4, 1) => M41, (4, 2) => M42, (4, 3) => M43, (4, 4) => M44,
+
             _ => throw new IndexOutOfRangeException()
         };
         set
         {
             switch ((row, col))
             {
-                case (0, 0): M00 = value; break;
-                case (0, 1): M01 = value; break;
-                case (0, 2): M02 = value; break;
-                case (0, 3): M03 = value; break;
-                case (0, 4): M04 = value; break;
-                case (1, 0): M10 = value; break;
-                case (1, 1): M11 = value; break;
-                case (1, 2): M12 = value; break;
-                case (1, 3): M13 = value; break;
-                case (1, 4): M14 = value; break;
-                case (2, 0): M20 = value; break;
-                case (2, 1): M21 = value; break;
-                case (2, 2): M22 = value; break;
-                case (2, 3): M23 = value; break;
-                case (2, 4): M24 = value; break;
-                case (3, 0): M30 = value; break;
-                case (3, 1): M31 = value; break;
-                case (3, 2): M32 = value; break;
-                case (3, 3): M33 = value; break;
-                case (3, 4): M34 = value; break;
-                case (4, 0): M40 = value; break;
-                case (4, 1): M41 = value; break;
-                case (4, 2): M42 = value; break;
-                case (4, 3): M43 = value; break;
-                case (4, 4): M44 = value; break;
+                case (0, 0): M00 = value; break; case (0, 1): M01 = value; break; case (0, 2): M02 = value; break; case (0, 3): M03 = value; break; case (0, 4): M04 = value; break; 
+                case (1, 0): M10 = value; break; case (1, 1): M11 = value; break; case (1, 2): M12 = value; break; case (1, 3): M13 = value; break; case (1, 4): M14 = value; break; 
+                case (2, 0): M20 = value; break; case (2, 1): M21 = value; break; case (2, 2): M22 = value; break; case (2, 3): M23 = value; break; case (2, 4): M24 = value; break; 
+                case (3, 0): M30 = value; break; case (3, 1): M31 = value; break; case (3, 2): M32 = value; break; case (3, 3): M33 = value; break; case (3, 4): M34 = value; break; 
+                case (4, 0): M40 = value; break; case (4, 1): M41 = value; break; case (4, 2): M42 = value; break; case (4, 3): M43 = value; break; case (4, 4): M44 = value; break;
                 default: throw new IndexOutOfRangeException();
             }
         }
@@ -315,101 +256,45 @@ public static class FilterMatrices
     private const float LG = 0.7152f;
     private const float LB = 0.0722f;
 
+
     /// <summary>
     /// Grayscale using perceptual luminance weights (Rec.709).
     /// </summary>
     public static ColorMatrix Grayscale() => new()
     {
-        M00 = LR,
-        M01 = LR,
-        M02 = LR,
-        M03 = 0,
-        M04 = 0,
-        M10 = LG,
-        M11 = LG,
-        M12 = LG,
-        M13 = 0,
-        M14 = 0,
-        M20 = LB,
-        M21 = LB,
-        M22 = LB,
-        M23 = 0,
-        M24 = 0,
-        M30 = 0,
-        M31 = 0,
-        M32 = 0,
-        M33 = 1,
-        M34 = 0,
-        M40 = 0,
-        M41 = 0,
-        M42 = 0,
-        M43 = 0,
-        M44 = 1,
+        M00 = LR, M01 = LR, M02 = LR, M03 = 0, M04 = 0,  
+        M10 = LG, M11 = LG, M12 = LG, M13 = 0, M14 = 0,  
+        M20 = LB, M21 = LB, M22 = LB, M23 = 0, M24 = 0,  
+        M30 = 0,  M31 = 0,  M32 = 0,  M33 = 1, M34 = 0,  
+        M40 = 0,  M41 = 0,  M42 = 0,  M43 = 0, M44 = 1,
     };
+
 
     /// <summary>
     /// Color inversion.
     /// </summary>
     public static ColorMatrix Invert() => new()
     {
-        M00 = -1,
-        M01 = 0,
-        M02 = 0,
-        M03 = 0,
-        M04 = 0,
-        M10 = 0,
-        M11 = -1,
-        M12 = 0,
-        M13 = 0,
-        M14 = 0,
-        M20 = 0,
-        M21 = 0,
-        M22 = -1,
-        M23 = 0,
-        M24 = 0,
-        M30 = 0,
-        M31 = 0,
-        M32 = 0,
-        M33 = 1,
-        M34 = 0,
-        M40 = 1,
-        M41 = 1,
-        M42 = 1,
-        M43 = 0,
-        M44 = 1,
+        M00 = -1, M01 = 0,  M02 = 0,  M03 = 0, M04 = 0, 
+        M10 = 0,  M11 = -1, M12 = 0,  M13 = 0, M14 = 0, 
+        M20 = 0,  M21 = 0,  M22 = -1, M23 = 0, M24 = 0, 
+        M30 = 0,  M31 = 0,  M32 = 0,  M33 = 1, M34 = 0, 
+        M40 = 1,  M41 = 1,  M42 = 1,  M43 = 0, M44 = 1,
     };
+
 
     /// <summary>
     /// Sepia tone effect.
     /// </summary>
     public static ColorMatrix Sepia() => new()
     {
-        M00 = 0.393f,
-        M01 = 0.349f,
-        M02 = 0.272f,
-        M03 = 0,
-        M04 = 0,
-        M10 = 0.769f,
-        M11 = 0.686f,
-        M12 = 0.534f,
-        M13 = 0,
-        M14 = 0,
-        M20 = 0.189f,
-        M21 = 0.168f,
-        M22 = 0.131f,
-        M23 = 0,
-        M24 = 0,
-        M30 = 0,
-        M31 = 0,
-        M32 = 0,
-        M33 = 1,
-        M34 = 0,
-        M40 = 0,
-        M41 = 0,
-        M42 = 0,
-        M43 = 0,
-        M44 = 1,
+        M00 = 0.393f, M01 = 0.349f, M02 = 0.272f, M03 = 0, M04 = 0, 
+        M10 = 0.769f, M11 = 0.686f, M12 = 0.534f, M13 = 0, M14 = 0, 
+        M20 = 0.189f, M21 = 0.168f, M22 = 0.131f, M23 = 0, M24 = 0, 
+        M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0, 
+        M40 = 0, M41 = 0, M42 = 0, M43 = 0, M44 = 1,
     };
+
 
     /// <summary>
     /// Saturation adjustment. 0 = grayscale, 1 = identity, >1 = oversaturated.
@@ -423,33 +308,14 @@ public static class FilterMatrices
 
         return new ColorMatrix
         {
-            M00 = sr + sat,
-            M01 = sr,
-            M02 = sr,
-            M03 = 0,
-            M04 = 0,
-            M10 = sg,
-            M11 = sg + sat,
-            M12 = sg,
-            M13 = 0,
-            M14 = 0,
-            M20 = sb,
-            M21 = sb,
-            M22 = sb + sat,
-            M23 = 0,
-            M24 = 0,
-            M30 = 0,
-            M31 = 0,
-            M32 = 0,
-            M33 = 1,
-            M34 = 0,
-            M40 = 0,
-            M41 = 0,
-            M42 = 0,
-            M43 = 0,
-            M44 = 1,
+            M00 = sr + sat, M01 = sr,       M02 = sr,       M03 = 0, M04 = 0,  
+            M10 = sg,       M11 = sg + sat, M12 = sg,       M13 = 0, M14 = 0,  
+            M20 = sb,       M21 = sb,       M22 = sb + sat, M23 = 0, M24 = 0,  
+            M30 = 0,        M31 = 0,        M32 = 0,        M33 = 1, M34 = 0,  
+            M40 = 0,        M41 = 0,        M42 = 0,        M43 = 0, M44 = 1,
         };
     }
+
 
     /// <summary>
     /// Brightness offset. Adds a constant to all color channels.
@@ -461,33 +327,14 @@ public static class FilterMatrices
 
         return new ColorMatrix
         {
-            M00 = 1,
-            M01 = 0,
-            M02 = 0,
-            M03 = 0,
-            M04 = 0,
-            M10 = 0,
-            M11 = 1,
-            M12 = 0,
-            M13 = 0,
-            M14 = 0,
-            M20 = 0,
-            M21 = 0,
-            M22 = 1,
-            M23 = 0,
-            M24 = 0,
-            M30 = 0,
-            M31 = 0,
-            M32 = 0,
-            M33 = 1,
-            M34 = 0,
-            M40 = b,
-            M41 = b,
-            M42 = b,
-            M43 = 0,
-            M44 = 1,
+            M00 = 1, M01 = 0, M02 = 0, M03 = 0, M04 = 0,  
+            M10 = 0, M11 = 1, M12 = 0, M13 = 0, M14 = 0,  
+            M20 = 0, M21 = 0, M22 = 1, M23 = 0, M24 = 0,  
+            M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0,  
+            M40 = b, M41 = b, M42 = b, M43 = 0, M44 = 1,
         };
     }
+
 
     /// <summary>
     /// Contrast scaling around midpoint (0.5).
@@ -495,41 +342,30 @@ public static class FilterMatrices
     /// </summary>
     public static ColorMatrix Contrast(float contrast)
     {
-        float offset = 0.5f * (1 - contrast);
+        //contrast and offset
+        float c = contrast;
+        float o = 0.5f * (1 - c);
 
         return new ColorMatrix
         {
-            M00 = contrast,
-            M01 = 0,
-            M02 = 0,
-            M03 = 0,
-            M04 = 0,
-            M10 = 0,
-            M11 = contrast,
-            M12 = 0,
-            M13 = 0,
-            M14 = 0,
-            M20 = 0,
-            M21 = 0,
-            M22 = contrast,
-            M23 = 0,
-            M24 = 0,
-            M30 = 0,
-            M31 = 0,
-            M32 = 0,
-            M33 = 1,
-            M34 = 0,
-            M40 = offset,
-            M41 = offset,
-            M42 = offset,
-            M43 = 0,
-            M44 = 1,
+            M00 = c, M01 = 0, M02 = 0, M03 = 0, M04 = 0,
+            M10 = 0, M11 = c, M12 = 0, M13 = 0, M14 = 0,
+            M20 = 0, M21 = 0, M22 = c, M23 = 0, M24 = 0,
+            M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0,
+            M40 = o, M41 = o, M42 = o, M43 = 0, M44 = 1,
         };
     }
 
+
     /// <summary>
     /// Hue rotation in degrees. Rotates colors around the luminance axis.
-    /// This is impossible to do with gamma ramps — it's a true cross-channel operation.
+    /// The constants 0.143f, 0.140f, and -0.283f come from the cross-coupling 
+    /// terms in a 3D rotation matrix around the luminance axis in RGB space.
+    /// When you rotate hue, you're rotating the color vector around the 
+    /// grayscale diagonal (where R=G=B). This requires a rotation matrix that:
+    /// 
+    /// -Preserves luminance(the LR, LG, LB coefficients keep appearing)
+    /// -Rotates the chrominance components orthogonally
     /// </summary>
     public static ColorMatrix HueRotation(float degrees)
     {
@@ -537,179 +373,41 @@ public static class FilterMatrices
         float cos = MathF.Cos(rad);
         float sin = MathF.Sin(rad);
 
+        // INVERSE
+        float iLR = 1f - LR;
+        float iLG = 1f - LG;
+        float iLB = 1f - LB;
+
+
         return new ColorMatrix
         {
-            M00 = LR + cos * (1 - LR) + sin * (-LR),
-            M01 = LR + cos * (-LR) + sin * 0.143f,
-            M02 = LR + cos * (-LR) + sin * (-(1 - LR)),
-            M03 = 0,
-            M04 = 0,
 
-            M10 = LG + cos * (-LG) + sin * (-LG),
-            M11 = LG + cos * (1 - LG) + sin * 0.140f,
-            M12 = LG + cos * (-LG) + sin * LG,
-            M13 = 0,
-            M14 = 0,
-
-            M20 = LB + cos * (-LB) + sin * (1 - LB),
-            M21 = LB + cos * (-LB) + sin * (-0.283f),
-            M22 = LB + cos * (1 - LB) + sin * LB,
-            M23 = 0,
-            M24 = 0,
-
-            M30 = 0,
-            M31 = 0,
-            M32 = 0,
-            M33 = 1,
-            M34 = 0,
-            M40 = 0,
-            M41 = 0,
-            M42 = 0,
-            M43 = 0,
-            M44 = 1,
+            M00 = LR + cos * iLR + sin * -LR, M01 = LR + cos * -LR + sin *  0.143f, M02 = LR + cos * -LR + sin * (-iLR), M03 = 0, M04 = 0,  
+            M10 = LG + cos * -LG + sin * -LG, M11 = LG + cos * iLG + sin *  0.140f, M12 = LG + cos * -LG + sin * LG,     M13 = 0, M14 = 0,  
+            M20 = LB + cos * -LB + sin * iLB, M21 = LB + cos * -LB + sin * -0.283f, M22 = LB + cos * iLB + sin * LB,     M23 = 0, M24 = 0,  
+            M30 = 0,                          M31 = 0,                              M32 = 0,                             M33 = 1, M34 = 0,  
+            M40 = 0,                          M41 = 0,                              M42 = 0,                             M43 = 0, M44 = 1,
         };
     }
+
 
     /// <summary>
     /// Per-channel RGB tint/gain. Multiplies each channel independently.
     /// </summary>
     public static ColorMatrix ChannelGain(float red, float green, float blue)
     {
+        float r = red, g = green, b = blue;
+
         return new ColorMatrix
         {
-            M00 = red,
-            M01 = 0,
-            M02 = 0,
-            M03 = 0,
-            M04 = 0,
-            M10 = 0,
-            M11 = green,
-            M12 = 0,
-            M13 = 0,
-            M14 = 0,
-            M20 = 0,
-            M21 = 0,
-            M22 = blue,
-            M23 = 0,
-            M24 = 0,
-            M30 = 0,
-            M31 = 0,
-            M32 = 0,
-            M33 = 1,
-            M34 = 0,
-            M40 = 0,
-            M41 = 0,
-            M42 = 0,
-            M43 = 0,
-            M44 = 1,
+            M00 = r, M01 = 0, M02 = 0, M03 = 0, M04 = 0,  
+            M10 = 0, M11 = g, M12 = 0, M13 = 0, M14 = 0,  
+            M20 = 0, M21 = 0, M22 = b, M23 = 0, M24 = 0,  
+            M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0,  
+            M40 = 0, M41 = 0, M42 = 0, M43 = 0, M44 = 1,
         };
     }
 
-    /// <summary>
-    /// Protanopia (red-blind) correction filter.
-    /// Shifts red information into perceivable channels.
-    /// </summary>
-    public static ColorMatrix ProtanopiaCorrection() => new()
-    {
-        M00 = 0.567f,
-        M01 = 0.558f,
-        M02 = 0,
-        M03 = 0,
-        M04 = 0,
-        M10 = 0.433f,
-        M11 = 0.442f,
-        M12 = 0.242f,
-        M13 = 0,
-        M14 = 0,
-        M20 = 0,
-        M21 = 0,
-        M22 = 0.758f,
-        M23 = 0,
-        M24 = 0,
-        M30 = 0,
-        M31 = 0,
-        M32 = 0,
-        M33 = 1,
-        M34 = 0,
-        M40 = 0,
-        M41 = 0,
-        M42 = 0,
-        M43 = 0,
-        M44 = 1,
-    };
-
-    /// <summary>
-    /// Deuteranopia (green-blind) correction filter.
-    /// </summary>
-    public static ColorMatrix DeuteranopiaCorrection() => new()
-    {
-        M00 = 0.625f,
-        M01 = 0.700f,
-        M02 = 0,
-        M03 = 0,
-        M04 = 0,
-        M10 = 0.375f,
-        M11 = 0.300f,
-        M12 = 0.300f,
-        M13 = 0,
-        M14 = 0,
-        M20 = 0,
-        M21 = 0,
-        M22 = 0.700f,
-        M23 = 0,
-        M24 = 0,
-        M30 = 0,
-        M31 = 0,
-        M32 = 0,
-        M33 = 1,
-        M34 = 0,
-        M40 = 0,
-        M41 = 0,
-        M42 = 0,
-        M43 = 0,
-        M44 = 1,
-    };
-
-    /// <summary>
-    /// Tritanopia (blue-blind) correction filter.
-    /// </summary>
-    public static ColorMatrix TritanopiaCorrection() => new()
-    {
-        M00 = 0.950f,
-        M01 = 0,
-        M02 = 0,
-        M03 = 0,
-        M04 = 0,
-        M10 = 0.050f,
-        M11 = 0.433f,
-        M12 = 0.475f,
-        M13 = 0,
-        M14 = 0,
-        M20 = 0,
-        M21 = 0.567f,
-        M22 = 0.525f,
-        M23 = 0,
-        M24 = 0,
-        M30 = 0,
-        M31 = 0,
-        M32 = 0,
-        M33 = 1,
-        M34 = 0,
-        M40 = 0,
-        M41 = 0,
-        M42 = 0,
-        M43 = 0,
-        M44 = 1,
-    };
-
-    /// <summary>
-    /// Negative image with adjustable strength.
-    /// 0 = identity, 1 = full inversion
-    /// </summary>
-    public static ColorMatrix Negative(float strength)
-    {
-        return Invert().WithStrength(strength);
-    }
 
     /// <summary>
     /// Per-channel RGB offset. Adds a constant to each channel independently.
@@ -721,33 +419,64 @@ public static class FilterMatrices
     {
         return new ColorMatrix
         {
-            M00 = 1,
-            M01 = 0,
-            M02 = 0,
-            M03 = 0,
-            M04 = 0,
-            M10 = 0,
-            M11 = 1,
-            M12 = 0,
-            M13 = 0,
-            M14 = 0,
-            M20 = 0,
-            M21 = 0,
-            M22 = 1,
-            M23 = 0,
-            M24 = 0,
-            M30 = 0,
-            M31 = 0,
-            M32 = 0,
-            M33 = 1,
-            M34 = 0,
-            M40 = R,
-            M41 = G,
-            M42 = B,
-            M43 = 0,
-            M44 = 1,
+            M00 = 1, M01 = 0, M02 = 0, M03 = 0, M04 = 0,  
+            M10 = 0, M11 = 1, M12 = 0, M13 = 0, M14 = 0,  
+            M20 = 0, M21 = 0, M22 = 1, M23 = 0, M24 = 0,  
+            M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0,  
+            M40 = R, M41 = G, M42 = B, M43 = 0, M44 = 1,
         };
     }
+
+
+    /// <summary>
+    /// Protanopia (red-blind) correction filter.
+    /// Shifts red information into perceivable channels.
+    /// </summary>
+    public static ColorMatrix ProtanopiaCorrection() => new()
+    {
+        M00 = 0.567f, M01 = 0.558f, M02 = 0,      M03 = 0, M04 = 0,  
+        M10 = 0.433f, M11 = 0.442f, M12 = 0.242f, M13 = 0, M14 = 0,  
+        M20 = 0,      M21 = 0,      M22 = 0.758f, M23 = 0, M24 = 0,  
+        M30 = 0,      M31 = 0,      M32 = 0,      M33 = 1, M34 = 0,  
+        M40 = 0,      M41 = 0,      M42 = 0,      M43 = 0, M44 = 1,
+    };
+
+
+    /// <summary>
+    /// Deuteranopia (green-blind) correction filter.
+    /// </summary>
+    public static ColorMatrix DeuteranopiaCorrection() => new()
+    {
+        M00 = 0.625f, M01 = 0.700f, M02 = 0,      M03 = 0, M04 = 0,  
+        M10 = 0.375f, M11 = 0.300f, M12 = 0.300f, M13 = 0, M14 = 0,  
+        M20 = 0,      M21 = 0,      M22 = 0.700f, M23 = 0, M24 = 0,  
+        M30 = 0,      M31 = 0,      M32 = 0,      M33 = 1, M34 = 0,  
+        M40 = 0,      M41 = 0,      M42 = 0,      M43 = 0, M44 = 1,
+    };
+
+
+    /// <summary>
+    /// Tritanopia (blue-blind) correction filter.
+    /// </summary>
+    public static ColorMatrix TritanopiaCorrection() => new()
+    {
+        M00 = 0.950f, M01 = 0,      M02 = 0,      M03 = 0, M04 = 0,  
+        M10 = 0.050f, M11 = 0.433f, M12 = 0.475f, M13 = 0, M14 = 0,  
+        M20 = 0,      M21 = 0.567f, M22 = 0.525f, M23 = 0, M24 = 0,  
+        M30 = 0,      M31 = 0,      M32 = 0,      M33 = 1, M34 = 0,  
+        M40 = 0,      M41 = 0,      M42 = 0,      M43 = 0, M44 = 1,
+    };
+
+
+    /// <summary>
+    /// Negative image with adjustable strength.
+    /// 0 = identity, 1 = full inversion
+    /// </summary>
+    public static ColorMatrix Negative(float strength)
+    {
+        return Invert().WithStrength(strength);
+    }
+
 
     /// <summary>
     /// Adjusts black and white points independently (like Levels in Photoshop).
@@ -755,40 +484,43 @@ public static class FilterMatrices
     /// blackPoint: 0.0 to 0.3 (raises blacks, creates "lifted" look)
     /// whitePoint: 0.7 to 1.0 (lowers ceiling, creates "faded" look)
     /// </summary>
-    public static ColorMatrix Levels(float blackPoint, float whitePoint)
+    public static ColorMatrix InputLevels(float inBlack, float inWhite)
     {
-        float scale = 1.0f / (whitePoint - blackPoint);
-        float offset = -blackPoint * scale;
+        //SCALE AND OFFSET
+        float s = 1.0f / (inWhite - inBlack);
+        float o = -inBlack * s;
 
         return new ColorMatrix
         {
-            M00 = scale,
-            M01 = 0,
-            M02 = 0,
-            M03 = 0,
-            M04 = 0,
-            M10 = 0,
-            M11 = scale,
-            M12 = 0,
-            M13 = 0,
-            M14 = 0,
-            M20 = 0,
-            M21 = 0,
-            M22 = scale,
-            M23 = 0,
-            M24 = 0,
-            M30 = 0,
-            M31 = 0,
-            M32 = 0,
-            M33 = 1,
-            M34 = 0,
-            M40 = offset,
-            M41 = offset,
-            M42 = offset,
-            M43 = 0,
-            M44 = 1,
+            M00 = s, M01 = 0, M02 = 0, M03 = 0, M04 = 0,  
+            M10 = 0, M11 = s, M12 = 0, M13 = 0, M14 = 0,  
+            M20 = 0, M21 = 0, M22 = s, M23 = 0, M24 = 0,  
+            M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0,  
+            M40 = o, M41 = o, M42 = o, M43 = 0, M44 = 1,
         };
     }
+
+
+    /// <summary>
+    /// Output levels — compresses full [0,1] input range to [outBlack, outWhite] output range.
+    /// outBlack: 0.0 to 0.5 (lifts black floor — nothing goes below this value)
+    /// outWhite: 0.5 to 1.0 (lowers white ceiling — nothing goes above this value)
+    /// </summary>
+    public static ColorMatrix OutputLevels(float outBlack, float outWhite)
+    {
+        float s = outWhite - outBlack;
+        float o = outBlack;
+
+        return new ColorMatrix
+        {
+            M00 = s, M01 = 0, M02 = 0, M03 = 0, M04 = 0, 
+            M10 = 0, M11 = s, M12 = 0, M13 = 0, M14 = 0, 
+            M20 = 0, M21 = 0, M22 = s, M23 = 0, M24 = 0, 
+            M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0, 
+            M40 = o, M41 = o, M42 = o, M43 = 0, M44 = 1,
+        };
+    }
+
 
     /// <summary>
     /// Vibrance — selective saturation that affects muted colors more than saturated ones.
@@ -808,33 +540,14 @@ public static class FilterMatrices
 
         return new ColorMatrix
         {
-            M00 = rwgt + s,
-            M01 = rwgt,
-            M02 = rwgt,
-            M03 = 0,
-            M04 = 0,
-            M10 = gwgt,
-            M11 = gwgt + s,
-            M12 = gwgt,
-            M13 = 0,
-            M14 = 0,
-            M20 = bwgt,
-            M21 = bwgt,
-            M22 = bwgt + s,
-            M23 = 0,
-            M24 = 0,
-            M30 = 0,
-            M31 = 0,
-            M32 = 0,
-            M33 = 1,
-            M34 = 0,
-            M40 = 0,
-            M41 = 0,
-            M42 = 0,
-            M43 = 0,
-            M44 = 1,
+            M00 = rwgt + s, M01 = rwgt,     M02 = rwgt,     M03 = 0, M04 = 0,  
+            M10 = gwgt,     M11 = gwgt + s, M12 = gwgt,     M13 = 0, M14 = 0,  
+            M20 = bwgt,     M21 = bwgt,     M22 = bwgt + s, M23 = 0, M24 = 0,  
+            M30 = 0,        M31 = 0,        M32 = 0,        M33 = 1, M34 = 0,  
+            M40 = 0,        M41 = 0,        M42 = 0,        M43 = 0, M44 = 1,
         };
     }
+
 
     /// <summary>
     /// Photographic exposure adjustment in stops.
@@ -843,36 +556,84 @@ public static class FilterMatrices
     /// </summary>
     public static ColorMatrix Exposure(float stops)
     {
-        float multiplier = MathF.Pow(2.0f, stops);
+        //MULTIPLIER
+        float m = MathF.Pow(2.0f, stops); 
+
         return new ColorMatrix
         {
-            M00 = multiplier,
-            M01 = 0,
-            M02 = 0,
-            M03 = 0,
-            M04 = 0,
-            M10 = 0,
-            M11 = multiplier,
-            M12 = 0,
-            M13 = 0,
-            M14 = 0,
-            M20 = 0,
-            M21 = 0,
-            M22 = multiplier,
-            M23 = 0,
-            M24 = 0,
-            M30 = 0,
-            M31 = 0,
-            M32 = 0,
-            M33 = 1,
-            M34 = 0,
-            M40 = 0,
-            M41 = 0,
-            M42 = 0,
-            M43 = 0,
-            M44 = 1,
+            M00 = m, M01 = 0, M02 = 0, M03 = 0, M04 = 0,  
+            M10 = 0, M11 = m, M12 = 0, M13 = 0, M14 = 0,  
+            M20 = 0, M21 = 0, M22 = m, M23 = 0, M24 = 0,  
+            M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0,  
+            M40 = 0, M41 = 0, M42 = 0, M43 = 0, M44 = 1,
         };
     }
+
+
+    /// <summary>
+    /// White-point locked linear approximation of a gamma power curve.
+    /// Safely shifts mid/low tones without breaking maximum display clipping.
+    /// </summary>
+    public static ColorMatrix ApproximateGamma(float gamma)
+    {
+        //OFFSET AND GAIN
+        float o = (1.0f - gamma) * 0.18f; 
+        float g = 1.0f - o; 
+
+        return new ColorMatrix
+        {
+            M00 = g, M01 = 0, M02 = 0, M03 = 0, M04 = 0,
+            M10 = 0, M11 = g, M12 = 0, M13 = 0, M14 = 0,
+            M20 = 0, M21 = 0, M22 = g, M23 = 0, M24 = 0,
+            M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0,
+            M40 = o, M41 = o, M42 = o, M43 = 0, M44 = 1,
+        };
+    }
+
+
+    /// <summary>
+    /// Selective adjustment targeting the lower end of the histogram.
+    /// Recovers or crushes dark details using an implicit low pivot point.
+    /// Range: -1.0 (crush) to 1.0 (recover)
+    /// </summary>
+    public static ColorMatrix Shadows(float shadows)
+    {
+        //scale and offset
+        float s = 1.0f + (shadows * 0.25f);
+        float o = -0.2f * (s - 1.0f);
+
+        return new ColorMatrix
+        {
+            M00 = s, M01 = 0, M02 = 0, M03 = 0, M04 = 0,
+            M10 = 0, M11 = s, M12 = 0, M13 = 0, M14 = 0,
+            M20 = 0, M21 = 0, M22 = s, M23 = 0, M24 = 0,
+            M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0,
+            M40 = o, M41 = o, M42 = o, M43 = 0, M44 = 1,
+        };
+    }
+
+
+    /// <summary>
+    /// High-pivot scaling targeting bright regions of the screen.
+    /// Pulls down harsh whites or blows them out while keeping black level stable.
+    /// Range: -1.0 (compress) to 1.0 (overexpose)
+    /// </summary>
+    public static ColorMatrix Highlights(float highlights)
+    {
+        //scale and offset
+        float s = 1.0f + (highlights * 0.25f);
+        float o = 1.0f * (1.0f - s);
+
+        return new ColorMatrix
+        {
+            M00 = s, M01 = 0, M02 = 0, M03 = 0, M04 = 0,
+            M10 = 0, M11 = s, M12 = 0, M13 = 0, M14 = 0,
+            M20 = 0, M21 = 0, M22 = s, M23 = 0, M24 = 0,
+            M30 = 0, M31 = 0, M32 = 0, M33 = 1, M34 = 0,
+            M40 = o, M41 = o, M42 = o, M43 = 0, M44 = 1,
+        };
+    }
+
 
     /// <summary>
     /// Color temperature shift in Kelvin.
@@ -909,6 +670,7 @@ public static class FilterMatrices
         return ChannelGain(r, g, b);
     }
 
+
     /// <summary>
     /// Approximates split toning — different color tints for shadows vs highlights.
     /// This is a MATRIX APPROXIMATION of true luminance-based split toning.
@@ -939,6 +701,7 @@ public static class FilterMatrices
         );
     }
 
+
     #region Film Look Presets
 
     /// <summary>
@@ -947,11 +710,12 @@ public static class FilterMatrices
     /// </summary>
     public static ColorMatrix WarmFilm()
     {
-        var lifted = Levels(0.08f, 1.0f);                      // Raise blacks
+        var lifted = InputLevels(0.08f, 1.0f);                      // Raise blacks
         var warm = ChannelGain(1.1f, 1.0f, 0.9f);              // Orange tint
         var tealShadows = ChannelOffset(0.0f, 0.02f, 0.03f);   // Teal in shadows
         return ColorMatrix.Multiply(ColorMatrix.Multiply(lifted, warm), tealShadows);
     }
+
 
     /// <summary>
     /// Cool Film — crushed shadows with desaturated blues.
@@ -965,6 +729,7 @@ public static class FilterMatrices
         return ColorMatrix.Multiply(ColorMatrix.Multiply(crushed, desat), cool);
     }
 
+
     /// <summary>
     /// Cyberpunk — boosted magentas and cyans with crushed midtones.
     /// Neon-inspired color palette with high contrast.
@@ -977,6 +742,7 @@ public static class FilterMatrices
         return ColorMatrix.Multiply(ColorMatrix.Multiply(magenta, cyan), crush);
     }
 
+
     /// <summary>
     /// Noir — high contrast black and white with preserved highlights.
     /// Classic film noir aesthetic with deep blacks and bright highlights.
@@ -985,9 +751,10 @@ public static class FilterMatrices
     {
         var bw = Grayscale();                                  // Convert to B&W
         var highContrast = Contrast(1.6f);                     // High contrast
-        var liftBlacks = Levels(0.05f, 0.95f);                 // Slight compression
+        var liftBlacks = InputLevels(0.05f, 0.95f);                 // Slight compression
         return ColorMatrix.Multiply(ColorMatrix.Multiply(bw, highContrast), liftBlacks);
     }
+
 
     /// <summary>
     /// Vintage — faded colors with lifted blacks and warm cast.
@@ -996,7 +763,7 @@ public static class FilterMatrices
     public static ColorMatrix Vintage()
     {
         var faded = Saturation(0.6f);                          // Fade colors
-        var lifted = Levels(0.12f, 0.93f);                     // Lifted blacks, lowered whites
+        var lifted = InputLevels(0.12f, 0.93f);                     // Lifted blacks, lowered whites
         var warm = ChannelGain(1.1f, 1.0f, 0.85f);             // Warm cast
         var sepia = ChannelOffset(0.05f, 0.03f, 0.0f);         // Slight sepia tint
         return ColorMatrix.Multiply(
@@ -1005,6 +772,7 @@ public static class FilterMatrices
                 warm),
             sepia);
     }
+
 
     /// <summary>
     /// HDR Effect — simulated high dynamic range via contrast and saturation boost.
@@ -1074,8 +842,10 @@ public class FilterProfile
     public float BlueOffset { get; set; } = 0.0f;           // -1.0 to 1.0
 
     // Advanced adjustments
-    public float BlackPoint { get; set; } = 0.0f;           // 0.0 to 0.3 (lifts blacks)
-    public float WhitePoint { get; set; } = 1.0f;           // 0.7 to 1.0 (lowers ceiling)
+    public float InputBlackPoint { get; set; } = 0.0f;           // 0.0 to 0.3 (lifts blacks)
+    public float InputWhitePoint { get; set; } = 1.0f;           // 0.7 to 1.0 (lowers ceiling)
+    public float OutputBlackPoint { get; set; } = 0.0f;    // 0.0 to 0.5
+    public float OutputWhitePoint { get; set; } = 1.0f;    // 0.5 to 1.0
     public float Vibrance { get; set; } = 0.0f;             // -1.0 to 1.0 (selective saturation)
     public float Exposure { get; set; } = 0.0f;             // -3.0 to 3.0 (stops)
     public float Temperature { get; set; } = 6500f;         // 2000K to 10000K
@@ -1083,6 +853,11 @@ public class FilterProfile
     // Split toning (shadow/highlight tints)
     public Color ShadowTint { get; set; } = Colors.Transparent;
     public Color HighlightTint { get; set; } = Colors.Transparent;
+    // Tonal range adjustments
+    public float ApproximateGamma { get; set; } = 1.0f;               // 0.5 to 2.0 (1.0 = neutral)
+    public float ShadowsAdjust { get; set; } = 0.0f;       // -1.0 to 1.0
+    public float HighlightsAdjust { get; set; } = 0.0f;    // -1.0 to 1.0
+
     public float ToneBalance { get; set; } = 0.5f;          // 0.0 to 1.0
 
 
@@ -1104,8 +879,13 @@ public class FilterProfile
         RedOffset = this.RedOffset,
         GreenOffset = this.GreenOffset,
         BlueOffset = this.BlueOffset,
-        BlackPoint = this.BlackPoint,
-        WhitePoint = this.WhitePoint,
+        InputBlackPoint = this.InputBlackPoint,
+        InputWhitePoint = this.InputWhitePoint,
+        OutputBlackPoint = this.OutputBlackPoint,
+        OutputWhitePoint = this.OutputWhitePoint,
+        ApproximateGamma = this.ApproximateGamma,
+        ShadowsAdjust = this.ShadowsAdjust,
+        HighlightsAdjust = this.HighlightsAdjust,
         Vibrance = this.Vibrance,
         Exposure = this.Exposure,
         Temperature = this.Temperature,
@@ -1113,6 +893,7 @@ public class FilterProfile
         HighlightTint = this.HighlightTint,
         ToneBalance = this.ToneBalance
     };
+
     /// <summary>
     /// Builds the final composite 5x5 color matrix from all parameters.
     /// Composition order: Preset -> Exposure -> Temperature -> Levels -> 
@@ -1147,11 +928,39 @@ public class FilterProfile
             result = ColorMatrix.Multiply(temp, result);
         }
 
-        // 4. Levels (black/white point adjustment)
-        if (MathF.Abs(BlackPoint) > 0.001f || MathF.Abs(WhitePoint - 1.0f) > 0.001f)
+        // 4. Input Levels (black/white point adjustment)
+        if (MathF.Abs(InputBlackPoint) > 0.001f || MathF.Abs(InputWhitePoint - 1.0f) > 0.001f)
         {
-            var levels = FilterMatrices.Levels(BlackPoint, WhitePoint);
+            var levels = FilterMatrices.InputLevels(InputBlackPoint, InputWhitePoint);
             result = ColorMatrix.Multiply(levels, result);
+        }
+
+        // 4b. Output Levels (compress output range)
+        if (MathF.Abs(OutputBlackPoint) > 0.001f || MathF.Abs(OutputWhitePoint - 1.0f) > 0.001f)
+        {
+            var outLevels = FilterMatrices.OutputLevels(OutputBlackPoint, OutputWhitePoint);
+            result = ColorMatrix.Multiply(outLevels, result);
+        }
+
+        // 4c. Gamma approximation
+        if (MathF.Abs(ApproximateGamma - 1.0f) > 0.001f)
+        {
+            var gam = FilterMatrices.ApproximateGamma(ApproximateGamma);
+            result = ColorMatrix.Multiply(gam, result);
+        }
+
+        // 4d. Shadows
+        if (MathF.Abs(ShadowsAdjust) > 0.001f)
+        {
+            var shd = FilterMatrices.Shadows(ShadowsAdjust);
+            result = ColorMatrix.Multiply(shd, result);
+        }
+
+        // 4e. Highlights
+        if (MathF.Abs(HighlightsAdjust) > 0.001f)
+        {
+            var hlt = FilterMatrices.Highlights(HighlightsAdjust);
+            result = ColorMatrix.Multiply(hlt, result);
         }
 
         // 5. Inversion
@@ -1183,18 +992,14 @@ public class FilterProfile
         }
 
         // 9. Channel gains
-        if (MathF.Abs(RedGain - 1.0f) > 0.001f ||
-            MathF.Abs(GreenGain - 1.0f) > 0.001f ||
-            MathF.Abs(BlueGain - 1.0f) > 0.001f)
+        if (MathF.Abs(RedGain - 1.0f) > 0.001f || MathF.Abs(GreenGain - 1.0f) > 0.001f || MathF.Abs(BlueGain - 1.0f) > 0.001f)
         {
             var gains = FilterMatrices.ChannelGain(RedGain, GreenGain, BlueGain);
             result = ColorMatrix.Multiply(gains, result);
         }
 
         // 10. Channel offsets
-        if (MathF.Abs(RedOffset) > 0.001f ||
-            MathF.Abs(GreenOffset) > 0.001f ||
-            MathF.Abs(BlueOffset) > 0.001f)
+        if (MathF.Abs(RedOffset) > 0.001f || MathF.Abs(GreenOffset) > 0.001f || MathF.Abs(BlueOffset) > 0.001f)
         {
             var offsets = FilterMatrices.ChannelOffset(RedOffset, GreenOffset, BlueOffset);
             result = ColorMatrix.Multiply(offsets, result);
@@ -1237,13 +1042,7 @@ public class FilterProfile
         FilterPreset.DeuteranopiaCorrection => FilterMatrices.DeuteranopiaCorrection(),
         FilterPreset.TritanopiaCorrection => FilterMatrices.TritanopiaCorrection(),
         FilterPreset.HighContrast => FilterMatrices.Contrast(1.6f),
-        FilterPreset.NightLight => ColorMatrix.Multiply(
-            FilterMatrices.Saturation(0.8f),
-            ColorMatrix.Multiply(
-                FilterMatrices.ChannelGain(1.0f, 0.9f, 0.6f),
-                FilterMatrices.Brightness(-0.05f)
-            )
-        ),
+        FilterPreset.NightLight => ColorMatrix.Multiply( FilterMatrices.Saturation(0.8f), ColorMatrix.Multiply( FilterMatrices.ChannelGain(1.0f, 0.9f, 0.6f), FilterMatrices.Brightness(-0.05f) ) ),
         FilterPreset.WarmFilm => FilterMatrices.WarmFilm(),
         FilterPreset.CoolFilm => FilterMatrices.CoolFilm(),
         FilterPreset.Cyberpunk => FilterMatrices.Cyberpunk(),
@@ -1279,8 +1078,10 @@ public class FilterProfile
                MathF.Abs(RedOffset) < 0.001f &&
                MathF.Abs(GreenOffset) < 0.001f &&
                MathF.Abs(BlueOffset) < 0.001f &&
-               MathF.Abs(BlackPoint) < 0.001f &&
-               MathF.Abs(WhitePoint - 1.0f) < 0.001f &&
+               MathF.Abs(InputBlackPoint) < 0.001f &&
+               MathF.Abs(InputWhitePoint - 1.0f) < 0.001f &&
+               MathF.Abs(OutputBlackPoint) < 0.001f &&
+               MathF.Abs(OutputWhitePoint - 1.0f) < 0.001f &&
                MathF.Abs(Vibrance) < 0.001f &&
                MathF.Abs(Exposure) < 0.001f &&
                MathF.Abs(Temperature - 6500f) < 10f &&

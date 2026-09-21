@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace DisplayControl.Services;
+namespace μLumen.Services;
 
 /// <summary>
 /// Captures screen regions and extracts pixel data for histogram analysis.

@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace DisplayControl;
+namespace μLumen;
 
 /// <summary>
 /// Helper to show WPF ContextMenu at cursor position for tray icon.

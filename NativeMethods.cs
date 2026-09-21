@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace DisplayControl.Native;
+namespace μLumen.Native;
 
 /// <summary>
 /// Native Windows API declarations for advanced display color manipulation.

@@ -1,10 +1,10 @@
-using DisplayControl.Native;
+using μLumen.Native;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
-using static DisplayControl.SettingsWindow;
+using static μLumen.SettingsWindow;
 
-namespace DisplayControl.Services;
+namespace μLumen.Services;
 
 /// <summary>
 /// High-level service for manipulating display color properties.

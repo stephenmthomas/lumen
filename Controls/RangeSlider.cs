@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace DisplayControl.Controls;
+namespace μLumen.Controls;
 
 /// <summary>
 /// A two-thumb range slider for selecting a min/max range.

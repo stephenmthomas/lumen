@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Math;
 
-namespace DisplayControl
+namespace μLumen
 {
     /// <summary>
     /// App specific ColorMethods 

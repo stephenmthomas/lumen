@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
-using DisplayControl.Native;
+using μLumen.Native;
 
-namespace DisplayControl.Services;
+namespace μLumen.Services;
 
 /// <summary>
 /// DXGI-based display backend using IDXGIOutput::SetGammaControl.

@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace DisplayControl.Controls;
+namespace μLumen.Controls;
 
 /// <summary>
 /// Displays a histogram for color channels (R, G, B, RGB composite, Luminance).

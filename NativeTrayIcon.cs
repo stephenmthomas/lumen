@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace DisplayControl;
+namespace μLumen;
 
 /// <summary>
 /// Native Windows system tray icon using P/Invoke.

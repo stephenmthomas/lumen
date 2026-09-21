@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
-using DisplayControl.Native;
+using μLumen.Native;
 
-namespace DisplayControl.Services.Advanced;
+namespace μLumen.Services.Advanced;
 
 /// <summary>
 /// ADVANCED FEATURE EXAMPLES - Not fully implemented, but shows how to extend
@@ -11,72 +11,7 @@ namespace DisplayControl.Services.Advanced;
 /// </summary>
 public static class AdvancedDisplayFeatures
 {
-    #region DXGI Advanced Display Control (Windows 10+)
 
-    /// <summary>
-    /// DXGI (DirectX Graphics Infrastructure) provides more advanced display control
-    /// than GDI gamma ramps. This is the modern Windows 10+ approach.
-    /// 
-    /// Benefits:
-    /// - Hardware-accelerated color transforms
-    /// - Better multi-monitor isolation
-    /// - HDR support
-    /// - 10-bit and 16-bit color precision
-    /// - Per-app color management
-    /// 
-    /// To implement this, you would:
-    /// 1. Reference SharpDX.DXGI NuGet package
-    /// 2. Enumerate adapters and outputs
-    /// 3. Use IDXGIOutput::SetGammaControl instead of SetDeviceGammaRamp
-    /// 
-    /// Example structure:
-    /// </summary>
-    public class DxgiDisplayController
-    {
-        // This is a PLACEHOLDER showing the architecture
-        // To actually implement this, add SharpDX.DXGI NuGet package
-        
-        /*
-        private SharpDX.DXGI.Factory1 _factory;
-        private List<SharpDX.DXGI.Adapter1> _adapters;
-        
-        public void Initialize()
-        {
-            _factory = new SharpDX.DXGI.Factory1();
-            _adapters = _factory.Adapters1.ToList();
-        }
-        
-        public void SetOutputGamma(int outputIndex, float[] redCurve, float[] greenCurve, float[] blueCurve)
-        {
-            var output = _adapters[0].Outputs[outputIndex];
-            var gammaControl = new SharpDX.DXGI.GammaControl
-            {
-                Scale = new SharpDX.Mathematics.Interop.RawVector3(1, 1, 1),
-                Offset = new SharpDX.Mathematics.Interop.RawVector3(0, 0, 0)
-            };
-            
-            // Copy curves into gamma control structure
-            for (int i = 0; i < 1025; i++)
-            {
-                gammaControl.GammaCurve[i] = new SharpDX.Mathematics.Interop.RawVector3(
-                    redCurve[i],
-                    greenCurve[i],
-                    blueCurve[i]
-                );
-            }
-            
-            output.SetGammaControl(ref gammaControl);
-        }
-        */
-        
-        // Key differences from GDI gamma ramp:
-        // - 1025 control points instead of 256 (better precision)
-        // - Separate scale/offset controls
-        // - Hardware-accelerated on modern GPUs
-        // - Works in HDR scenarios
-    }
-
-    #endregion
 
     #region Ambient Light Sensor Integration
 
@@ -242,36 +177,3 @@ public static class AdvancedDisplayFeatures
     #endregion
 }
 
-/// <summary>
-/// Usage examples for the advanced features:
-/// </summary>
-public class AdvancedExamples
-{
-    public static void ExampleUsage(DisplayService displayService)
-    {
-        // Example 1: Load a custom ICC profile for calibrated color
-        /*
-        AdvancedDisplayFeatures.SetMonitorColorProfile(
-            "\\\\.\\DISPLAY1",
-            @"C:\Windows\System32\spool\drivers\color\AdobeRGB1998.icc"
-        );
-        */
-
-        // Example 2: Blue light filter for evening use
-        /*
-        var blueFilterRamp = AdvancedDisplayFeatures.CreateBlueFilterRamp(0.7);
-        // Apply using DisplayService's low-level ramp setter (would need to expose this)
-        */
-
-        // Example 3: Scheduled auto-switching
-        /*
-        var scheduler = new AdvancedDisplayFeatures.ProfileScheduler(displayService);
-        scheduler.Schedule = new List<AdvancedDisplayFeatures.ProfileScheduler.ScheduledProfile>
-        {
-            new() { Time = new TimeSpan(7, 0, 0), Profile = ColorProfile.Default },
-            new() { Time = new TimeSpan(20, 0, 0), Profile = ColorProfile.Night }
-        };
-        scheduler.Start();
-        */
-    }
-}

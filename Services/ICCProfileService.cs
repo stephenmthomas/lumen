@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.Text;
 using System.Linq;
-using DisplayControl.Native;
+using μLumen.Native;
 
-namespace DisplayControl.Services;
+namespace μLumen.Services;
 
 public class ICCProfileService
 {

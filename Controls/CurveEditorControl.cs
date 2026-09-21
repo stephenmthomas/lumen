@@ -2,9 +2,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using DisplayControl.Services;
+using μLumen.Services;
 
-namespace DisplayControl.Controls;
+namespace μLumen.Controls;
 
 /// <summary>
 /// Interactive curve editor control similar to Photoshop/Lightroom curves.

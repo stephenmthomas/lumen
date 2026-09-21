@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace DisplayControl.Controls;
+namespace μLumen.Controls;
 
 /// <summary>
 /// Read-only display control that visualizes the current gamma ramp output.

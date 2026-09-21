@@ -27,14 +27,14 @@ This document covers most features of μLumen from end-user operation through to
 
 ## 1. Installation & First Launch
 
-μLumen is a standalone .NET 8 WPF application. No installer is needed — run `DisplayControl.exe` directly.
+μLumen is a standalone .NET 8 WPF application. No installer is needed — run `μLumen.exe` directly.
 
 On first launch the application will:
 - Enumerate all connected monitors via `EnumDisplayMonitors`
 - Capture the original gamma ramp for each monitor (stored in memory for clean resets)
 - Attempt to initialize the DXGI backend (falls back to GDI silently if unavailable)
 - Initialize the Magnification API for fullscreen color filters
-- Load settings from `%LocalAppData%\DisplayControl\settings.json` (creates defaults if absent)
+- Load settings from `%LocalAppData%\μLumen\settings.json` (creates defaults if absent)
 - Register global hotkeys
 - Create a system tray icon
 - Open the settings window (or start minimized, if configured)
@@ -260,7 +260,7 @@ Four built-in presets exist in the code but are currently disabled. Details belo
 
 ### User Presets
 
-Click "Save Preset" to capture the entire current state — all gamma ramp controls plus all filter settings — into a named JSON file. Presets are stored at `%LocalAppData%\DisplayControl\Presets\` and appear in the preset dropdown.
+Click "Save Preset" to capture the entire current state — all gamma ramp controls plus all filter settings — into a named JSON file. Presets are stored at `%LocalAppData%\μLumen\Presets\` and appear in the preset dropdown.
 
 Each preset file contains:
 - The full `ColorProfile` (all gamma ramp parameters, curve control points, levels)
@@ -531,7 +531,7 @@ All P/Invoke declarations are centralized in `NativeMethods.cs`. The application
 ## 15. Data Storage & File Formats
 
 ### Settings
-**Path**: `%LocalAppData%\DisplayControl\settings.json`
+**Path**: `%LocalAppData%\μLumen\settings.json`
 
 ```json
 {
@@ -545,7 +545,7 @@ All P/Invoke declarations are centralized in `NativeMethods.cs`. The application
 ```
 
 ### User Presets
-**Path**: `%LocalAppData%\DisplayControl\Presets\<PresetName>.json`
+**Path**: `%LocalAppData%\μLumen\Presets\<PresetName>.json`
 
 Each file is a serialized `UserPreset` containing:
 - `Name`: Display name
@@ -587,3 +587,202 @@ Other applications (f.lux, Windows Night Light, NVIDIA color settings) can overw
 ---
 
 *μLumen — by S.T.*
+
+
+--- 
+
+#PENDING UPDATES
+
+Gemini says:
+
+Since you have already built out a comprehensive parametric matrix system (which is fantastic, by the way!), you have likely bumped into the fundamental limitation of a 5x5 color matrix: it is purely linear.
+Because a matrix cannot perform true non-linear math (like exponents or power curves required for true Gamma, Shadows, or Highlights), we have to cheat. We can use mathematical approximations that mimic these curves beautifully by combining the linear gains ($M_{00}, M_{11}, M_{22}$) with the translation offsets ($M_{40}, M_{41}, M_{42}$) relative to specific thresholds.
+Here is how you can implement approximations for Gamma, Shadows, and Highlights into your mutable matrix system.
+------------------------------
+## 1. Matrix Approximation of Gamma (Power Curve)
+A true gamma curve uses an exponent ($Output = Input^{1/\gamma}$). In a linear matrix, we can approximate a gamma curve using a quadratic Taylor expansion mapped onto the slope (gain) and lift (offset).
+
+* Lowering Gamma compresses midtones down while locking black and white points.
+* Raising Gamma pushes midtones up.
+
+public static ColorMatrix ApproximateGamma(float gamma)
+{
+    // Clamp gamma to a reasonable range (e.g., 0.5 to 2.5)
+    gamma = Math.Clamp(gamma, 0.5f, 2.5f);
+    
+    // Linear approximation factors for midtone shifting
+    float gain = (float)Math.Pow(1.0f, 1.0f / gamma);
+    
+    // We adjust the offset to bow the midtones without shifting the absolute black point
+    // An empirical curve mapping for linear approximation:
+    float offset = (1.0f - gamma) * 0.15f; 
+
+    return new ColorMatrix
+    {
+        M00 = gain + offset, M01 = 0,             M02 = 0,             M03 = 0, M04 = 0,
+        M10 = 0,             M11 = gain + offset, M12 = 0,             M13 = 0, M14 = 0,
+        M20 = 0,             M21 = 0,             M22 = gain + offset, M23 = 0, M24 = 0,
+        M30 = 0,             M31 = 0,             M32 = 0,             M33 = 1, M34 = 0,
+        M40 = -offset * 0.5f,M41 = -offset * 0.5f,M42 = -offset * 0.5f,M43 = 0, M44 = 1,
+    };
+}
+
+------------------------------
+## 2. Matrix Approximation of Shadows & Highlights
+In photo editing software, Shadows and Highlights selectively alter only the very dark or very bright regions of the image.
+To achieve this in a linear matrix, we use a Pivot and Scale technique. We treat the offset row ($M_{4x}$) as our directional anchor, and adjust the channel multipliers to collapse or expand colors around a virtual threshold.
+## Shadows (Compressing or Recovering Darks)
+To approximate a shadow control, we pivot around a low intensity point (roughly $0.2$ on a $0.0$ to $1.0$ scale).
+
+* Positive values recover shadow details (lift blacks into dark grays).
+* Negative values crush shadows (make dark grays pure black).
+
+public static ColorMatrix Shadows(float shadows)
+{
+    // shadows parameter: -1.0f (deeply crushed) to +1.0f (highly recovered)
+    // Map to a usable matrix multiplier scale
+    float scale = 1.0f + (shadows * 0.25f);
+    
+    // The offset acts as the pivot point anchor
+    float offset = -0.2f * (scale - 1.0f);
+
+    return new ColorMatrix
+    {
+        M00 = scale, M01 = 0,     M02 = 0,     M03 = 0, M04 = 0,
+        M10 = 0,     M11 = scale, M12 = 0,     M13 = 0, M14 = 0,
+        M20 = 0,     M21 = 0,     M22 = scale, M23 = 0, M24 = 0,
+        M30 = 0,     M31 = 0,     M32 = 0,     M33 = 1, M34 = 0,
+        M40 = offset,M41 = offset,M42 = offset,M43 = 0, M44 = 1,
+    };
+}
+
+## Highlights (Compressing or Recovering Brights)
+For highlights, we pivot around the maximum white point ($1.0$).
+
+* Negative values compress blown-out highlights down into soft grays.
+* Positive values overexpose the highlights.
+
+public static ColorMatrix Highlights(float highlights)
+{
+    // highlights parameter: -1.0f (compressed/recovered) to +1.0f (blown out)
+    float scale = 1.0f + (highlights * 0.25f);
+    
+    // Pivot anchored at 1.0 (White Point)
+    float offset = 1.0f * (1.0f - scale);
+
+    return new ColorMatrix
+    {
+        M00 = scale, M01 = 0,     M02 = 0,     M03 = 0, M04 = 0,
+        M10 = 0,     M11 = scale, M12 = 0,     M13 = 0, M14 = 0,
+        M20 = 0,     M21 = 0,     M22 = scale, M23 = 0, M24 = 0,
+        M30 = 0,     M31 = 0,     M32 = 0,     M33 = 1, M34 = 0,
+        M40 = offset,M41 = offset,M42 = offset,M43 = 0, M44 = 1,
+    };
+}
+
+------------------------------
+## 3. Finer Control Channels Worth Exploring
+Since you already have advanced channels like Hue Rotation and Tone Balance, here are two more finer-control paths you can plug directly into your FilterProfile:
+## A. Clarity / Local Contrast Simulation
+While true clarity requires a spatial blur matrix, you can simulate a global "Clarity/Pop" effect by isolating the midtones. This matrix pushes midtones away from gray toward absolute black or white without clipping the extreme edges:
+
+public static ColorMatrix Clarity(float clarity)
+{
+    // clarity: -1.0f to +1.0f
+    float slope = 1.0f + clarity * 0.15f;
+    float offset = -0.5f * (slope - 1.0f);
+
+    return new ColorMatrix
+    {
+        M00 = slope, M01 = 0,     M02 = 0,     M03 = 0, M04 = 0,
+        M10 = 0,     M11 = slope, M12 = 0,     M13 = 0, M14 = 0,
+        M20 = 0,     M21 = 0,     M22 = slope, M23 = 0, M24 = 0,
+        M30 = 0,     M31 = 0,     M32 = 0,     M33 = 1, M34 = 0,
+        M40 = offset,M41 = offset,M42 = offset,M43 = 0, M44 = 1,
+    };
+}
+
+## B. Dynamic "Eased" Multiplication (To avoid hard clipping)
+When combining all these matrices via matrix multiplication ($A \times B \times C$), your scale values can stack exponentially and aggressively clip to pure white or pure black.
+To gain finer control, you can apply a Sigmoid-like easing function to your slider inputs before feeding them into the matrix constructor. For instance, instead of passing raw Brightness linearly, pass it through an easing function so the slider has ultra-fine control near the middle ($0$) and gets progressively more aggressive at the edges:
+
+// Smooth step easing to give fine control in the center of your UI slidersprivate float EaseSliderInput(float value)
+{
+    // Assumes value is normalized between -1.0 and 1.0
+    return MathF.Sign(value) * MathF.Pow(MathF.Abs(value), 1.5f);
+}
+
+How are you currently multiplying your matrices together to build the final composition? If you want, I can show you how to structure an optimized combining pipeline that prevents color math overflow when stacking all these parameters.
+
+---
+
+but, alas, i say:
+
+The gamma approximation is weak. Math.Pow(1.0f, 1.0f / gamma) is always 1.0 regardless of gamma — the gain term does nothing. The whole effect comes entirely from the offset, which makes it basically a brightness shift with a misleading name. The Shadows and Clarity matrices are more coherent.
+
+---
+
+and gemini says:
+
+You are entirely right, and I appreciate you catching that. That was an embarrassing mathematical oversight on my part. Math.Pow(1.0f, ...) will always resolve to 1.0, meaning that entire formula collapsed into a flat linear offset—which is exactly why it just felt like a cheap, misleading brightness slider.
+Because a 5x5 matrix cannot perform exponents, we cannot truly isolate the midtones while pinning both absolute black ($0.0$) and absolute white ($1.0$) using a single linear transform. However, if we want a coherent Gamma approximation, we have to use a parabolic or piece-wise linear approximation that shifts the midpoint ($0.5$) while forcing the bounds to converge.
+Here is a corrected, statistically stable approach to approximating a gamma curve using slope/intercept manipulation that actually targets the midtones instead of turning into a flat brightness shift.
+## The Corrected Gamma Matrix Approximation
+To make a linear matrix mimic a gamma power curve, we must scale the channels (gain) and shift them (offset) in inverse directions.
+
+* To simulate a lower Gamma ($\gamma < 1.0$, brighter midtones): We increase the offset (lift the darks) but decrease the gain (pull down the whites) so the white point stays anchored at $1.0$.
+* To simulate a higher Gamma ($\gamma > 1.0$, darker midtones): We drop the offset (crush the darks) but increase the gain to pull the whites back up to $1.0$.
+
+public static ColorMatrix ApproximateGamma(float gamma)
+{
+    // Clamp to safe functional ranges (e.g., 0.5 to 2.0. 1.0 is neutral)
+    gamma = Math.Clamp(gamma, 0.5f, 2.0f);
+
+    // Calculate how much the midtone needs to bow
+    // If gamma = 0.5 (bright midtones), offset is positive, gain is less than 1
+    // If gamma = 2.0 (dark midtones), offset is negative, gain is greater than 1
+    float offset = (1.0f - gamma) * 0.18f; 
+    float gain = 1.0f - offset; 
+
+    return new ColorMatrix
+    {
+        M00 = gain, M01 = 0,    M02 = 0,    M03 = 0, M04 = 0,
+        M10 = 0,    M11 = gain, M12 = 0,    M13 = 0, M14 = 0,
+        M20 = 0,    M21 = 0,    M22 = gain, M23 = 0, M24 = 0,
+        M30 = 0,    M31 = 0,    M32 = 0,    M33 = 1, M34 = 0,
+        M40 = offset, M41 = offset, M42 = offset, M43 = 0, M44 = 1,
+    };
+}
+
+## Why This One Works Coherently
+If you test this matrix mathematically against extreme pixels, you will see it preserves the endpoints much better than a simple brightness shift:
+
+* Black Point ($0,0,0$): Becomes ($offset$). It does introduce a small amount of black-level lift or crush, which is the inevitable tax of a linear matrix trying to mimic a curve.
+* White Point ($1,1,1$): Becomes ($gain + offset$). Because $gain = 1.0 - offset$, the math resolves to: $(1.0 - offset) + offset = 1.0$. The white point remains perfectly locked.
+
+## Taking It Further: Splitting the Slopes
+Since you noted that the Shadows and Clarity matrices felt structurally sound, you can apply that exact same Pivot and Scale logic to build an alternative "Midtone Gamma" slider.
+Instead of targeting the white point, you can anchor the pivot directly at the center ($0.5$). This creates a Contrast Stretch / Midtone Gamma hybrid that expands or compresses exclusively around the center of your histogram:
+
+public static ColorMatrix MidtoneGamma(float adjustment)
+{
+    // adjustment: -0.5f (darken midtones) to +0.5f (brighten midtones)
+    float gain = 1.0f + adjustment;
+    float offset = -0.5f * adjustment; // Pivot anchored exactly at 0.5 gray
+
+    return new ColorMatrix
+    {
+        M00 = gain, M01 = 0,    M02 = 0,    M03 = 0, M04 = 0,
+        M10 = 0,    M11 = gain, M12 = 0,    M13 = 0, M14 = 0,
+        M20 = 0,    M21 = 0,    M22 = gain, M23 = 0, M24 = 0,
+        M30 = 0,    M31 = 0,    M32 = 0,    M33 = 1, M34 = 0,
+        M40 = offset, M41 = offset, M42 = offset, M43 = 0, M44 = 1,
+    };
+}
+
+How does this corrected anchored curve hold up against your current filter profile pipeline? If you want to dive deeper into other channels, we can look into setting up a per-channel pivot matrix to give you finer control over Temperature / Tint balances.
+
+---
+
+but... The corrected gamma is much more honest.The corrected gamma is much more honest. The white-point lock (gain + offset = 1.0 by construction) is the key insight, and it's now actually doing something distinct from brightness.
+One thing worth noting: MidtoneGamma with pivot at 0.5 is indeed your existing Contrast method, just reparameterized. They're mathematically the same transform. So you'd be adding ApproximateGamma (white-locked, pivoting implicitly near the top), Shadows, and Highlights as genuinely new controls.

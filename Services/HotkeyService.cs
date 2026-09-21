@@ -1,7 +1,7 @@
 using System.Windows.Interop;
-using DisplayControl.Native;
+using μLumen.Native;
 
-namespace DisplayControl.Services;
+namespace μLumen.Services;
 
 /// <summary>
 /// Manages global hotkeys that work even when the application doesn't have focus.

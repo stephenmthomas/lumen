@@ -1,5 +1,5 @@
-using DisplayControl.Native;
-using DisplayControl.Services;
+using μLumen.Native;
+using μLumen.Services;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -8,9 +8,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using static DisplayControl.SettingsWindow;
+using static μLumen.SettingsWindow;
 
-namespace DisplayControl;
+namespace μLumen;
 
 public partial class SettingsWindow : Window
 {
@@ -45,7 +45,6 @@ public partial class SettingsWindow : Window
         _currentProfile = new ColorProfile();
 
         
-
         LoadMonitors();
         InitializeCurveEditors();
         LoadCurrentValues();
@@ -696,14 +695,28 @@ public partial class SettingsWindow : Window
     private void FilterBlackPointSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         if (_isUpdating || _filterService == null) return;
-        _currentFilterProfile.BlackPoint = (float)(e.NewValue / 100.0);
+        _currentFilterProfile.InputBlackPoint = (float)(e.NewValue / 100.0);
         ApplyCurrentFilter();
     }
 
     private void FilterWhitePointSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
     {
         if (_isUpdating || _filterService == null) return;
-        _currentFilterProfile.WhitePoint = (float)(e.NewValue / 100.0);
+        _currentFilterProfile.InputWhitePoint = (float)(e.NewValue / 100.0);
+        ApplyCurrentFilter();
+    }
+
+    private void FilterOutputBlackSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_isUpdating || _filterService == null) return;
+        _currentFilterProfile.OutputBlackPoint = (float)(e.NewValue / 100.0);
+        ApplyCurrentFilter();
+    }
+
+    private void FilterOutputWhiteSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_isUpdating || _filterService == null) return;
+        _currentFilterProfile.OutputWhitePoint = (float)(e.NewValue / 100.0);
         ApplyCurrentFilter();
     }
 
@@ -711,6 +724,27 @@ public partial class SettingsWindow : Window
     {
         if (_isUpdating || _filterService == null) return;
         _currentFilterProfile.Vibrance = (float)(e.NewValue / 100.0);
+        ApplyCurrentFilter();
+    }
+
+    private void FilterGammaSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_isUpdating || _filterService == null) return;
+        _currentFilterProfile.ApproximateGamma = (float)(e.NewValue / 100.0);
+        ApplyCurrentFilter();
+    }
+
+    private void FilterShadowsSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_isUpdating || _filterService == null) return;
+        _currentFilterProfile.ShadowsAdjust = (float)(e.NewValue / 100.0);
+        ApplyCurrentFilter();
+    }
+
+    private void FilterHighlightsSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_isUpdating || _filterService == null) return;
+        _currentFilterProfile.HighlightsAdjust = (float)(e.NewValue / 100.0);
         ApplyCurrentFilter();
     }
 
@@ -743,30 +777,11 @@ public partial class SettingsWindow : Window
     {
         var matrix = _currentFilterProfile.BuildMatrix();
 
-        // Row 0 (R output)
-        M00.Text = matrix.M00.ToString("F3"); M01.Text = matrix.M01.ToString("F3");
-        M02.Text = matrix.M02.ToString("F3"); M03.Text = matrix.M03.ToString("F3");
-        M04.Text = matrix.M04.ToString("F3");
-
-        // Row 1 (G output)
-        M10.Text = matrix.M10.ToString("F3"); M11.Text = matrix.M11.ToString("F3");
-        M12.Text = matrix.M12.ToString("F3"); M13.Text = matrix.M13.ToString("F3");
-        M14.Text = matrix.M14.ToString("F3");
-
-        // Row 2 (B output)
-        M20.Text = matrix.M20.ToString("F3"); M21.Text = matrix.M21.ToString("F3");
-        M22.Text = matrix.M22.ToString("F3"); M23.Text = matrix.M23.ToString("F3");
-        M24.Text = matrix.M24.ToString("F3");
-
-        // Row 3 (A output)
-        M30.Text = matrix.M30.ToString("F3"); M31.Text = matrix.M31.ToString("F3");
-        M32.Text = matrix.M32.ToString("F3"); M33.Text = matrix.M33.ToString("F3");
-        M34.Text = matrix.M34.ToString("F3");
-
-        // Row 4 (homogeneous coordinate) - ADDED
-        M40.Text = matrix.M40.ToString("F3"); M41.Text = matrix.M41.ToString("F3");
-        M42.Text = matrix.M42.ToString("F3"); M43.Text = matrix.M43.ToString("F3");
-        M44.Text = matrix.M44.ToString("F3");
+        M00.Text = matrix.M00.ToString("F3"); M01.Text = matrix.M01.ToString("F3"); M02.Text = matrix.M02.ToString("F3"); M03.Text = matrix.M03.ToString("F3"); M04.Text = matrix.M04.ToString("F3");
+        M10.Text = matrix.M10.ToString("F3"); M11.Text = matrix.M11.ToString("F3"); M12.Text = matrix.M12.ToString("F3"); M13.Text = matrix.M13.ToString("F3"); M14.Text = matrix.M14.ToString("F3");
+        M20.Text = matrix.M20.ToString("F3"); M21.Text = matrix.M21.ToString("F3"); M22.Text = matrix.M22.ToString("F3"); M23.Text = matrix.M23.ToString("F3"); M24.Text = matrix.M24.ToString("F3");
+        M30.Text = matrix.M30.ToString("F3"); M31.Text = matrix.M31.ToString("F3"); M32.Text = matrix.M32.ToString("F3"); M33.Text = matrix.M33.ToString("F3"); M34.Text = matrix.M34.ToString("F3");
+        M40.Text = matrix.M40.ToString("F3"); M41.Text = matrix.M41.ToString("F3"); M42.Text = matrix.M42.ToString("F3"); M43.Text = matrix.M43.ToString("F3"); M44.Text = matrix.M44.ToString("F3");
     }
 
     private void ResetFilters_Click(object sender, RoutedEventArgs e)
@@ -775,32 +790,46 @@ public partial class SettingsWindow : Window
 
         _currentFilterProfile = new FilterProfile();
 
-        PresetStrengthSlider.Value = 100;
-        FilterInversionSlider.Value = 0;
+        // Basic
         FilterBrightnessSlider.Value = 0;
         FilterContrastSlider.Value = 100;
         FilterSaturationSlider.Value = 100;
         FilterHueSlider.Value = 0;
+
+        // Advanced
+        FilterVibranceSlider.Value = 0;
+        FilterExposureSlider.Value = 0;
+        FilterTemperatureSlider.Value = 6500;
+        FilterInversionSlider.Value = 0;
+
+        // Levels
+        FilterBlackPointSlider.Value = 0;
+        FilterWhitePointSlider.Value = 100;
+        FilterOutputBlackSlider.Value = 0;
+        FilterOutputWhiteSlider.Value = 100;
+
+        // Tonal
+        FilterGammaSlider.Value = 100;
+        FilterShadowsSlider.Value = 0;
+        FilterHighlightsSlider.Value = 0;
+
+        // Channel Gain
         FilterRedGainSlider.Value = 100;
         FilterGreenGainSlider.Value = 100;
         FilterBlueGainSlider.Value = 100;
+
+        // Channel Offset
         FilterRedOffsetSlider.Value = 0;
         FilterGreenOffsetSlider.Value = 0;
         FilterBlueOffsetSlider.Value = 0;
 
-        FilterBlackPointSlider.Value = 0;
-        FilterWhitePointSlider.Value = 100;
-        FilterVibranceSlider.Value = 0;
-        FilterExposureSlider.Value = 0;
-        FilterTemperatureSlider.Value = 6500;
+        // Preset
+        FilterPresetComboBox.SelectedIndex = 0; // "None"
+        PresetStrengthSlider.Value = 100;
 
         _isUpdating = false;
 
-        if (_filtersEnabled)
-        {
-            _filterService?.ClearFilter();
-        }
-
+        ApplyCurrentFilter();
         UpdateMatrixPreview();
     }
 
@@ -818,8 +847,8 @@ public partial class SettingsWindow : Window
         FilterRedOffsetSlider.Value = _currentFilterProfile.RedOffset * 100;
         FilterGreenOffsetSlider.Value = _currentFilterProfile.GreenOffset * 100;
         FilterBlueOffsetSlider.Value = _currentFilterProfile.BlueOffset * 100;
-        FilterBlackPointSlider.Value = _currentFilterProfile.BlackPoint * 100;
-        FilterWhitePointSlider.Value = _currentFilterProfile.WhitePoint * 100;
+        FilterBlackPointSlider.Value = _currentFilterProfile.InputBlackPoint * 100;
+        FilterWhitePointSlider.Value = _currentFilterProfile.InputWhitePoint * 100;
         FilterVibranceSlider.Value = _currentFilterProfile.Vibrance * 100;
         FilterExposureSlider.Value = _currentFilterProfile.Exposure * 100;
         FilterTemperatureSlider.Value = _currentFilterProfile.Temperature;
@@ -1123,7 +1152,6 @@ public partial class SettingsWindow : Window
     }
 
     #endregion
-
 
     #region Form Code
 
@@ -1505,7 +1533,7 @@ public partial class SettingsWindow : Window
 
     private static readonly string PresetsPath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "DisplayControl",
+        "μLumen",
         "Presets"
     );
 

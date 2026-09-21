@@ -1,7 +1,7 @@
 using System;
 using System.Windows;
 
-namespace DisplayControl
+namespace μLumen
 {
     /// <summary>
     /// Manages runtime theme switching.

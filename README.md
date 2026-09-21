@@ -72,8 +72,8 @@
 - Global hotkeys for brightness, contrast, gamma, and color temperature (work without focus)
 - Start minimized to tray, minimize-on-close, always-on-top
 - Optional reset-to-system-defaults on exit
-- Persistent user presets (JSON, saved to `%LocalAppData%\DisplayControl\Presets`)
-- Settings persistence (JSON, saved to `%LocalAppData%\DisplayControl\settings.json`)</details>
+- Persistent user presets (JSON, saved to `%LocalAppData%\μLumen\Presets`)
+- Settings persistence (JSON, saved to `%LocalAppData%\μLumen\settings.json`)</details>
 
 <details>
 <summary>Custom WPF Dark Theme</summary>
@@ -118,7 +118,7 @@
 
 **Installation:**
 1. Extract the ZIP file
-2. Run `DisplayControl.exe`
+2. Run `μLumen.exe`
 3. No installation required
 
 ---
@@ -139,7 +139,7 @@ No NuGet packages or external dependencies are required - all display manipulati
 
 ## 🚀 Quick Start
 
-1. Run `DisplayControl.exe`
+1. Run `μLumen.exe`
 2. The settings window opens centered on screen; the tray icon appears in the system tray
 3. Select a monitor from the toolbar dropdown (or leave on "All Monitors")
 4. Adjust sliders - changes apply in real-time if "Real-Time Updates" is enabled
