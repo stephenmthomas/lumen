@@ -111,9 +111,9 @@
 
 ## ⬇️ Download
 
-### Latest Release: v0.0.2
+### Latest Release: v0.0.3
 
-**[μLumen v0.0.2 for Windows](https://github.com/stephenmthomas/lumen/releases/download/v0.0.2/uLumen0.0.2.zip)** (x64)
+**[μLumen v0.0.3 for Windows](https://github.com/stephenmthomas/lumen/releases/download/v0.0.3/uLumen0.0.3.zip)** (x64)
 
 **Installation:**
 1. Extract the ZIP file

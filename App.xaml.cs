@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Interop;
 using System.IO;
 using μLumen.Services;
@@ -95,6 +95,11 @@ public partial class App : Application
         _settingsWindow.Left = (System.Windows.SystemParameters.PrimaryScreenWidth / 2) - (_settingsWindow.Width / 2);
         _settingsWindow.Top = (System.Windows.SystemParameters.PrimaryScreenHeight / 2) - (_settingsWindow.Height / 2);
 
+        // Autoload preset
+        if (_settingsService.Settings.AutoloadPreset && !string.IsNullOrEmpty(_settingsService.Settings.AutoloadPresetFileName))
+        {
+            _settingsWindow.LoadPresetByTag(_settingsService.Settings.AutoloadPresetFileName);
+        }
 
     }
 
@@ -117,52 +122,65 @@ public partial class App : Application
 
     private void ShowContextMenu(Point position)
     {
-        if (_contextMenu == null)
+        // Rebuild every time so user presets stay current
+        _contextMenu = new TrayContextMenu();
+
+        // Build menu structure
+        _contextMenu.AddItem("Show Settings", () =>
         {
-            _contextMenu = new TrayContextMenu();
+            _settingsWindow?.Show();
+            _settingsWindow?.Activate();
+        });
 
-            // Build menu structure
-            _contextMenu.AddItem("Show Settings", () =>
-            {
-                _settingsWindow?.Show();
-                _settingsWindow?.Activate();
-            });
+        _contextMenu.AddSeparator();
 
-            _contextMenu.AddSeparator();
+        // Presets submenu
+        var presetsMenu = _contextMenu.AddSubmenu("Presets");
+        presetsMenu.Items.Add(new System.Windows.Controls.MenuItem
+        {
+            Header = "Default",
+            Command = new RelayCommand(() => _settingsWindow?.LoadPresetByTag("builtin:default"))
+        });
+        presetsMenu.Items.Add(new System.Windows.Controls.MenuItem
+        {
+            Header = "Night Mode",
+            Command = new RelayCommand(() => _settingsWindow?.LoadPresetByTag("builtin:night"))
+        });
+        presetsMenu.Items.Add(new System.Windows.Controls.MenuItem
+        {
+            Header = "Reading",
+            Command = new RelayCommand(() => _settingsWindow?.LoadPresetByTag("builtin:reading"))
+        });
+        presetsMenu.Items.Add(new System.Windows.Controls.MenuItem
+        {
+            Header = "Gaming",
+            Command = new RelayCommand(() => _settingsWindow?.LoadPresetByTag("builtin:gaming"))
+        });
 
-            // Presets submenu
-            var presetsMenu = _contextMenu.AddSubmenu("Presets");
-            presetsMenu.Items.Add(new System.Windows.Controls.MenuItem
+        // User presets
+        if (_settingsWindow?.UserPresets.Count > 0)
+        {
+            presetsMenu.Items.Add(new System.Windows.Controls.Separator());
+            foreach (var preset in _settingsWindow.UserPresets)
             {
-                Header = "Default",
-                Command = new RelayCommand(() => _displayService?.ApplyColorProfile(ColorProfile.Default))
-            });
-            presetsMenu.Items.Add(new System.Windows.Controls.MenuItem
-            {
-                Header = "Night Mode",
-                Command = new RelayCommand(() => _displayService?.ApplyColorProfile(ColorProfile.Night))
-            });
-            presetsMenu.Items.Add(new System.Windows.Controls.MenuItem
-            {
-                Header = "Reading",
-                Command = new RelayCommand(() => _displayService?.ApplyColorProfile(ColorProfile.Reading))
-            });
-            presetsMenu.Items.Add(new System.Windows.Controls.MenuItem
-            {
-                Header = "Gaming",
-                Command = new RelayCommand(() => _displayService?.ApplyColorProfile(ColorProfile.Gaming))
-            });
-
-            _contextMenu.AddItem("Reset to System Default", () => _displayService?.ResetAll());
-
-            _contextMenu.AddSeparator();
-
-            _contextMenu.AddItem("Exit", () =>
-            {
-                _displayService?.ResetAll();
-                Shutdown();
-            });
+                var fileName = preset.FileName;
+                presetsMenu.Items.Add(new System.Windows.Controls.MenuItem
+                {
+                    Header = preset.Name,
+                    Command = new RelayCommand(() => _settingsWindow?.LoadPreset(fileName))
+                });
+            }
         }
+
+        _contextMenu.AddItem("Reset to System Default", () => _displayService?.ResetAll());
+
+        _contextMenu.AddSeparator();
+
+        _contextMenu.AddItem("Exit", () =>
+        {
+            _displayService?.ResetAll();
+            Shutdown();
+        });
 
         _contextMenu.Show(position);
     }

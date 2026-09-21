@@ -28,10 +28,11 @@ public partial class SettingsWindow : Window
 
     private SettingsService? _settingsService;
 
-    public string _version = "0.0.2";
+    public string _version = "0.0.3";
 
     private bool _profileDirty = false;
     private List<UserPreset> _userPresets = new();
+    public IReadOnlyList<UserPreset> UserPresets => _userPresets;
 
     public SettingsWindow(DisplayService displayService, FilterService filterService, SettingsService settingsService, ICCProfileService iccProfileService)
     {
@@ -66,6 +67,10 @@ public partial class SettingsWindow : Window
         AlwaysOnTopCheckbox.IsChecked = _settingsService.Settings.AlwaysOnTop;
 
         this.Topmost = _settingsService.Settings.AlwaysOnTop;
+
+        AutoloadPresetCheckbox.IsChecked = _settingsService.Settings.AutoloadPreset;
+        AutoloadPresetComboBox.IsEnabled = _settingsService.Settings.AutoloadPreset;
+        PopulateAutoloadComboBox();
 
         VersionTextBlock.Text = "Version " + _version;
 
@@ -1252,6 +1257,8 @@ public partial class SettingsWindow : Window
         // Reload presets list
         LoadUserPresets();
 
+        UpdateStatus($"Preset '{presetName}' saved.", StatusType.Good);
+
         // Select the newly created preset
         foreach (ComboBoxItem item in PresetComboBox.Items)
         {
@@ -1520,6 +1527,84 @@ public partial class SettingsWindow : Window
         _settingsService.Save();
     }
 
+    private void AutoloadPresetCheckbox_Click(object sender, RoutedEventArgs e)
+    {
+        _settingsService.Settings.AutoloadPreset = AutoloadPresetCheckbox.IsChecked == true;
+        AutoloadPresetComboBox.IsEnabled = AutoloadPresetCheckbox.IsChecked == true;
+        _settingsService.Save();
+    }
+
+    private void AutoloadPresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (_isUpdating) return;
+
+        if (AutoloadPresetComboBox.SelectedItem is ComboBoxItem item)
+        {
+            _settingsService.Settings.AutoloadPresetFileName = item.Tag?.ToString() ?? "";
+            _settingsService.Save();
+        }
+    }
+
+    private void PopulateAutoloadComboBox()
+    {
+        _isUpdating = true;
+        string currentSelection = _settingsService.Settings.AutoloadPresetFileName;
+        AutoloadPresetComboBox.Items.Clear();
+
+        // Built-in presets
+        AutoloadPresetComboBox.Items.Add(new ComboBoxItem { Content = "Default", Tag = "builtin:default" });
+        AutoloadPresetComboBox.Items.Add(new ComboBoxItem { Content = "Night", Tag = "builtin:night" });
+        AutoloadPresetComboBox.Items.Add(new ComboBoxItem { Content = "Reading", Tag = "builtin:reading" });
+        AutoloadPresetComboBox.Items.Add(new ComboBoxItem { Content = "Gaming", Tag = "builtin:gaming" });
+
+        // Separator + user presets
+        if (_userPresets.Count > 0)
+        {
+            AutoloadPresetComboBox.Items.Add(new Separator());
+            foreach (var preset in _userPresets)
+            {
+                AutoloadPresetComboBox.Items.Add(new ComboBoxItem { Content = preset.Name, Tag = preset.FileName });
+            }
+        }
+
+        // Restore selection
+        foreach (var item in AutoloadPresetComboBox.Items)
+        {
+            if (item is ComboBoxItem cbi && cbi.Tag?.ToString() == currentSelection)
+            {
+                AutoloadPresetComboBox.SelectedItem = cbi;
+                break;
+            }
+        }
+
+        if (AutoloadPresetComboBox.SelectedIndex < 0)
+            AutoloadPresetComboBox.SelectedIndex = 0;
+
+        _isUpdating = false;
+    }
+
+    public void LoadPresetByTag(string tag)
+    {
+        if (string.IsNullOrEmpty(tag)) return;
+
+        if (tag.StartsWith("builtin:"))
+        {
+            var name = tag["builtin:".Length..];
+            var profile = name switch
+            {
+                "night" => ColorProfile.Night,
+                "reading" => ColorProfile.Reading,
+                "gaming" => ColorProfile.Gaming,
+                _ => ColorProfile.Default
+            };
+            ApplyPreset(profile);
+        }
+        else
+        {
+            LoadPreset(tag);
+        }
+    }
+
     private void Apply_Click(object sender, RoutedEventArgs e)
     {
         _profileDirty = false;
@@ -1586,6 +1671,8 @@ public partial class SettingsWindow : Window
 
         PresetComboBox.SelectedIndex = 0;
         _isUpdating = false;
+
+        PopulateAutoloadComboBox();
     }
 
     private void SavePreset(UserPreset preset)
@@ -1610,7 +1697,7 @@ public partial class SettingsWindow : Window
         }
     }
 
-    private void LoadPreset(string fileName)
+    public void LoadPreset(string fileName)
     {
         try
         {

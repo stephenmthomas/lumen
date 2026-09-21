@@ -923,6 +923,9 @@
                                                 <CheckBox x:Name="AlwaysOnTopCheckbox" Content="Always On Top" IsChecked="True" Margin="18,6" Click="AlwaysOnTopCheckbox_Click"/>
                                                 <TextBlock Text="Keep the form always on top of other application windows." FontSize="9" Foreground="#707070" TextWrapping="Wrap" Margin="21,0,0,9"/>
 
+                                                <CheckBox x:Name="AutoloadPresetCheckbox" Content="Autoload Preset" IsChecked="False" Margin="18,6" Click="AutoloadPresetCheckbox_Click"/>
+                                                <TextBlock Text="Automatically load a selected preset when the application starts." FontSize="9" Foreground="#707070" TextWrapping="Wrap" Margin="21,0,0,9"/>
+                                                <ComboBox x:Name="AutoloadPresetComboBox" SelectionChanged="AutoloadPresetComboBox_SelectionChanged" Width="200" Height="24" Margin="21,0,0,9" HorizontalAlignment="Left" Style="{StaticResource CompactComboBox}" IsEnabled="False"/>
 
                                                 <TextBlock Text="Backend Gamma" FontSize="16" Foreground="{DynamicResource Theme.Brush.Text.Primary}" Margin="0,18,0,3"/>
                                                 <Separator Margin="0,0,0,9" Background="{DynamicResource Theme.Brush.Border.Separator}"/>

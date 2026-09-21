@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Text.Json;
 
 namespace μLumen.Services;
@@ -55,5 +55,7 @@ public class AppSettings
     public bool RealTimeUpdates { get; set;  } = false;
     public bool RealTimeHistogram { get; set; } = false;
     public bool AlwaysOnTop { get; set; } = false;
+    public bool AutoloadPreset { get; set; } = false;
+    public string AutoloadPresetFileName { get; set; } = "";
 
 }
