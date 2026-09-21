@@ -28,7 +28,7 @@ public partial class SettingsWindow : Window
 
     private SettingsService? _settingsService;
 
-    public string _version = "0.0.1";
+    public string _version = "0.0.2";
 
     private bool _profileDirty = false;
     private List<UserPreset> _userPresets = new();
