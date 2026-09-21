@@ -213,7 +213,7 @@ SOFTWARE.
 
 ---
 
-## 🙌 Acknowledgments
+## 🙌 Technical References
 
 - Color temperature algorithm based on Tanner Helland's approximation of Planckian locus CIE chromaticity
 - Rec. 709 luminance coefficients for perceptual color operations
