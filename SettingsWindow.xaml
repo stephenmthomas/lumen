@@ -528,8 +528,23 @@
                                                     <TextBlock Grid.Column="2" Text="{Binding ElementName=BlueLightSlider, Path=Value, StringFormat='{}{0:F0}%'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
                                                 </Grid>
                                                 <TextBlock Text="Reduces blue light emission targeting the 450-480nm range that disrupts sleep." FontSize="9" Foreground="#707070" TextWrapping="Wrap" Margin="0,0,0,6"/>
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="105"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="42"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="Clarity" VerticalAlignment="Center" FontSize="10"/>
+                                                    <Slider x:Name="ClaritySlider" Grid.Column="1" Minimum="0" Maximum="100" Value="0" ValueChanged="ClaritySlider_ValueChanged"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding ElementName=ClaritySlider, Path=Value, StringFormat='{}{0:F0}%'}" TextAlignment="Right" VerticalAlignment="Center" FontSize="10"/>
+                                                </Grid>
+                                                <TextBlock Text="Enhances midtone local contrast while preserving shadow and highlight detail." FontSize="9" Foreground="#707070" TextWrapping="Wrap" Margin="0,0,0,6"/>
+
                                             </StackPanel>
                                         </GroupBox>
+                                        
+                                    
                                         <GroupBox Header="Shadow / Highlight Recovery">
                                             <StackPanel>
                                                 <Grid>

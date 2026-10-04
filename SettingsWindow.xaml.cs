@@ -28,7 +28,7 @@ public partial class SettingsWindow : Window
 
     private SettingsService? _settingsService;
 
-    public string _version = "0.0.3";
+    public string _version = "0.0.4";
 
     private bool _profileDirty = false;
     private List<UserPreset> _userPresets = new();
@@ -173,6 +173,7 @@ public partial class SettingsWindow : Window
         // Enhancers
         DynamicContrastSlider.Value = 0;
         BlueLightSlider.Value = 0;
+        ClaritySlider.Value = 0;
         BlackEqualizerSlider.Value = 0;
         WhiteEqualizerSlider.Value = 0;
 
@@ -442,6 +443,13 @@ public partial class SettingsWindow : Window
         ApplyCurrentProfile();
     }
 
+    private void ClaritySlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_isUpdating || _displayService == null) return;
+        _currentProfile.Clarity = e.NewValue / 100.0;
+        ApplyCurrentProfile();
+    }
+
     #endregion
 
     #region Presets
@@ -507,6 +515,7 @@ public partial class SettingsWindow : Window
         // Enhancers
         DynamicContrastSlider.Value = profile.DynamicContrast * 100;
         BlueLightSlider.Value = profile.BlueLightFilter * 100;
+        ClaritySlider.Value = profile.Clarity * 100;
         BlackEqualizerSlider.Value = profile.BlackEqualizer * 100;
         WhiteEqualizerSlider.Value = profile.WhiteEqualizer * 100;
 
@@ -552,6 +561,12 @@ public partial class SettingsWindow : Window
         _currentProfile = new ColorProfile();
         InitializeCurveEditors();
         LoadCurrentValues();
+
+        _isUpdating = true;
+        PresetComboBox.SelectedIndex = 0; // "Default"
+        _isUpdating = false;
+
+        ApplyCurrentProfile();
     }
 
     #endregion
@@ -588,6 +603,12 @@ public partial class SettingsWindow : Window
         _currentProfile = new ColorProfile();
         InitializeCurveEditors();
         LoadCurrentValues();
+
+        _isUpdating = true;
+        PresetComboBox.SelectedIndex = 0; // "Default"
+        _isUpdating = false;
+
+        ApplyCurrentProfile();
     }
 
     #endregion
@@ -1733,6 +1754,17 @@ public partial class SettingsWindow : Window
             // Sync filter UI
             FilterPresetComboBox.SelectedIndex = 0; // Reset to Custom
             UpdateFilterSliders();
+
+            // Sync PresetComboBox to show loaded preset
+            foreach (ComboBoxItem item in PresetComboBox.Items)
+            {
+                if (item.Tag?.ToString() == fileName)
+                {
+                    PresetComboBox.SelectedItem = item;
+                    break;
+                }
+            }
+
             _isUpdating = false;
 
             ApplyCurrentProfile();

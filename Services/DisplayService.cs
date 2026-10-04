@@ -49,13 +49,13 @@ public class DisplayService : IDisposable
     public List<MonitorInfo> GetMonitors()
     {
         var monitors = new List<MonitorInfo>();
-        
+
         NativeMethods.EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero,
             (IntPtr hMonitor, IntPtr hdcMonitor, ref NativeMethods.RECT lprcMonitor, IntPtr dwData) =>
             {
                 var info = new NativeMethods.MONITORINFOEX();
                 info.Size = Marshal.SizeOf(info);
-                
+
                 if (NativeMethods.GetMonitorInfo(hMonitor, ref info))
                 {
                     monitors.Add(new MonitorInfo
@@ -69,7 +69,7 @@ public class DisplayService : IDisposable
                             info.Monitor.Bottom - info.Monitor.Top)
                     });
                 }
-                
+
                 return true;
             }, IntPtr.Zero);
 
@@ -79,14 +79,14 @@ public class DisplayService : IDisposable
     private void EnumerateMonitors()
     {
         var monitors = GetMonitors();
-        
+
         foreach (var monitor in monitors)
         {
             var hdc = NativeMethods.CreateDC("DISPLAY", monitor.DeviceName, null, IntPtr.Zero);
             if (hdc != IntPtr.Zero)
             {
                 _monitorHandles[monitor.DeviceName] = hdc;
-                
+
                 var ramp = new NativeMethods.GammaRamp();
                 if (NativeMethods.GetDeviceGammaRamp(hdc, ref ramp))
                 {
@@ -429,7 +429,7 @@ public class DisplayService : IDisposable
 
     /// <summary>
     /// Builds the complete gamma ramp from all profile parameters.
-    /// Pipeline: Input -> Levels -> Shadows/Mids/Highlights/Whites/Blacks -> 
+    /// Pipeline: Input -> Levels -> Shadows/Mids/Highlights/Whites/Blacks ->
     ///           Exposure/Offset -> Contrast -> Gamma -> Master Curve ->
     ///           Per-channel RGB Curves -> Color Temp + Tint + RGB Gains ->
     ///           Saturation/Vibrance -> Dynamic Enhancers -> Clamp
@@ -520,6 +520,12 @@ public class DisplayService : IDisposable
                 val = ApplyDynamicContrast(val, p.DynamicContrast);
             }
 
+            // === CLARITY (midtone-targeted contrast) ===
+            if (p.Clarity > 0.001)
+            {
+                val = ApplyClarity(val, p.Clarity);
+            }
+
             // Clamp before channel split
             val = Math.Clamp(val, 0.0, 1.0);
 
@@ -565,7 +571,7 @@ public class DisplayService : IDisposable
                 double maxC = Math.Max(r, Math.Max(g, b));
                 double minC = Math.Min(r, Math.Min(g, b));
                 double currentSat = (maxC > 0.001) ? (maxC - minC) / maxC : 0;
-                
+
                 // Less saturated pixels get more boost
                 double vibranceMult = 1.0 + p.Vibrance * (1.0 - currentSat);
                 r = avg + (r - avg) * vibranceMult;
@@ -687,6 +693,14 @@ public class DisplayService : IDisposable
         double x = val;
         double sCurve = x * x * (3.0 - 2.0 * x); // Hermite smoothstep
         return val + (sCurve - val) * strength;
+    }
+
+    private double ApplyClarity(double val, double strength)
+    {
+        double dist = val - 0.5;
+        double midWeight = Math.Exp(-8.0 * dist * dist);
+        double sCurve = val * val * (3.0 - 2.0 * val);
+        return val + (sCurve - val) * strength * midWeight;
     }
 
     private double ApplyBlackEqualizer(double val, double lift)
@@ -877,6 +891,7 @@ public class ColorProfile
     public double BlueLightFilter { get; set; } = 0.0;    // 0.0 to 1.0
     public double BlackEqualizer { get; set; } = 0.0;     // -1.0 to 1.0
     public double WhiteEqualizer { get; set; } = 0.0;     // 0.0 to 1.0
+    public double Clarity { get; set; } = 0.0;            // 0.0 to 1.0
 
     // === CURVES ===
     public ToneCurve Curve { get; set; } = new();          // Master luminance curve
@@ -917,6 +932,7 @@ public class ColorProfile
             BlueLightFilter = BlueLightFilter,
             BlackEqualizer = BlackEqualizer,
             WhiteEqualizer = WhiteEqualizer,
+            Clarity = Clarity,
             Curve = Curve.Clone(),
             RedCurve = RedCurve.Clone(),
             GreenCurve = GreenCurve.Clone(),
